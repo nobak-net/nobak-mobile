@@ -2,9 +2,9 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: 'mobile-signer',
-    slug: 'mobile-signer',
-    scheme: 'mobile-signer',
+    name: 'nobak',
+    slug: 'nobak',
+    scheme: 'nobak',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',

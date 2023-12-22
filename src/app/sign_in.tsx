@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, TextInput, Button, Dimensions, Keyboard, Toucha
 import { encrypt } from '../utils/crypto';
 import { useSession } from '../context/AuthContext';
 import { runFetch } from '../utils/runFetch';
-
+import { multiply } from 'nobak-design-system';
 // const sendEmailToAPI = async (email: string) => {
 //   try {
 //     const { response, isLoading } =await  useFetch('http://192.168.1.106:8781/auth/email', 'POST', JSON.stringify({ payload: email, type: 'OBJECT' }))
@@ -56,6 +56,8 @@ export default function SignIn() {
       alert('Please enter an email');
     }
   };
+
+  console.log('multiply', multiply(3, 7))
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

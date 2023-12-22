@@ -45,7 +45,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "^13.14.0",
     "stellar-base": "^10.0.0",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "nobak-design-system": "file:../nobak-design-system"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
