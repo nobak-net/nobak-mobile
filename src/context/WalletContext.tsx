@@ -11,7 +11,7 @@ import { getSdkError } from '@walletconnect/utils'
 // import { router } from 'expo-router';
 import { getPublicKey, signTransaction as signTX } from "../utils/StellarAccount";
 import { parseXDR } from "../services/parseXDR";
-
+import { Header } from 'nobak-native-design-system'
 type WalletProviderProps = {
     children: ReactElement;
 };
@@ -217,6 +217,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
                 successfulSession
             }}
         >
+            <Header />
             {children}
             <Modal
                 animationType="slide"

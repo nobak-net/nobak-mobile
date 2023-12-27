@@ -69,7 +69,7 @@ const emailChallenge = async (email: string) => {
 
 const signIn = async (code: string) => {
   const payload = encrypt({ code, email: 'hola@julianclatro.com' }, 'ThisIs32BytesLongSecretForAES!!!')
-  const response = await runFetch('http://192.168.1.106:8782/auth/verify', 'POST', JSON.stringify({ payload, type: 'OBJECT' }));
+  const response = await runFetch('http://192.168.1.103:8782/auth/verify', 'POST', JSON.stringify({ payload, type: 'OBJECT' }));
   if (response.status === 200) {
     router.push('/(app)')
   }

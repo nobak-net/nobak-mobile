@@ -2,7 +2,7 @@
 import { Text } from 'react-native'
 import { useSession } from '../../context/AuthContext';
 import { Tabs } from 'expo-router/tabs';
-import Icon from '../../components/Icon';
+import { Icon } from 'nobak-native-design-system';
 import { WalletProvider } from '../../context/WalletContext';
 export default function AppLayout() {
   const { session, isLoading } = useSession();

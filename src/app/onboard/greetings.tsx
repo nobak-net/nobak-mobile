@@ -41,7 +41,7 @@ const Greetings = () => (
             Start securing your digital assets with us.
         </Text>
         <Button title="Get Started" onPress={() => { }} />
-        <Icon name="Analytics" />
+        {/* <Icon name="Analytics" /> */}
     </View>
 );
 

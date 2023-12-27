@@ -1,0 +1,1 @@
+declare module 'nobak-native-design-system';

@@ -4,14 +4,9 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "STORYBOOK_ENABLED='false' expo run:android",
-    "ios": "STORYBOOK_ENABLED='false' expo run:ios",
-    "web": "STORYBOOK_ENABLED='false'expo start --web",
-    "storybook": "sb-rn-get-stories && STORYBOOK_ENABLED='true' expo start",
-    "storybook:ios": "sb-rn-get-stories && STORYBOOK_ENABLED='true' expo ios",
-    "storybook:android": "sb-rn-get-stories && STORYBOOK_ENABLED='true' expo android",
-    "storybook-generate": "sb-rn-get-stories",
-    "storybook-watch": "sb-rn-watcher"
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
   },
   "dependencies": {
     "@craftzdog/react-native-buffer": "^6.0.5",
@@ -35,6 +30,7 @@
     "expo-secure-store": "~12.3.1",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "nobak-native-design-system": "^0.0.1-dd896b719eb4",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-gesture-handler": "~2.12.0",
@@ -43,21 +39,14 @@
     "react-native-quick-crypto": "^0.6.1",
     "react-native-reanimated": "~3.3.0",
     "react-native-screens": "~3.22.0",
-    "react-native-svg": "^13.14.0",
     "stellar-base": "^10.0.0",
-    "stream-browserify": "^3.0.0",
-    "nobak-design-system": "file:../nobak-design-system"
+    "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-native-community/slider": "4.4.2",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-controls": "^6.5.16",
-    "@storybook/addon-ondevice-actions": "^6.5.7",
-    "@storybook/addon-ondevice-controls": "^6.5.7",
-    "@storybook/react-native": "^6.5.7",
     "@types/crypto-js": "^4.2.1",
     "@types/node": "^20.8.9",
     "@types/react": "^18.2.33",
