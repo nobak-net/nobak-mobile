@@ -44,6 +44,8 @@
 //   );
 // };
 
+import Constants from 'expo-constants';
+
 import { runFetch } from '../utils/runFetch';
 import { encrypt } from '../utils/crypto';
 import { router } from 'expo-router'
@@ -54,8 +56,10 @@ const AuthContext = React.createContext<{ signIn: (code: string) => void; signOu
 
 // This hook can be used to access the user info.
 export function useSession() {
+  const { NODE_ENV } = Constants.expoConfig?.extra  || {};
+
   const value = React.useContext(AuthContext);
-  if (process.env.NODE_ENV !== 'production') {
+  if (NODE_ENV !== 'production') {
     if (!value) {
       throw new Error('useSession must be wrapped in a <SessionProvider />');
     }
