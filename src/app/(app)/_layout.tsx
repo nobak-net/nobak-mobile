@@ -1,23 +1,41 @@
 // import { router, Stack } from 'expo-router';
-import { Text } from 'react-native'
+import { View } from 'react-native'
 import { useSession } from '../../context/AuthContext';
 import { Tabs } from 'expo-router/tabs';
-import { Icon } from 'nobak-native-design-system';
+import { Symbol } from 'nobak-native-design-system';
 import { WalletProvider } from '../../context/WalletContext';
+import { colors } from 'nobak-native-design-system';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 export default function AppLayout() {
   const { session, isLoading } = useSession();
+  const insets = useSafeAreaInsets();
 
   // This layout can be deferred because it's not the root layout.
   return <>
     <WalletProvider>
-      <Tabs>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: colors.primary[100],
+          tabBarActiveBackgroundColor: colors.primary[2400],
+          tabBarStyle: {
+            height: 100,
+            paddingBottom: insets.bottom,
+            backgroundColor: colors.primary[2400],
+          },
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: "bold",
+            marginBottom: 10,
+          },
+        }}>
         <Tabs.Screen
           name="index"
           options={{
             title: "Account",
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="Analytics" />
+                <Symbol type="Star" color={color} />
             ),
           }} />
         <Tabs.Screen
@@ -26,7 +44,7 @@ export default function AppLayout() {
             title: "Apps",
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="WalletConnect" />
+              <Symbol type="World" color={color} />
             ),
           }} />
         <Tabs.Screen
@@ -35,8 +53,13 @@ export default function AppLayout() {
             title: "Settings",
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
-              <Icon name="Clockwork" />
+              <Symbol type="Chip" color={color} />
             ),
+          }} />
+        <Tabs.Screen
+          name="result"
+          options={{
+            href: null,
           }} />
       </ Tabs>
     </WalletProvider>
