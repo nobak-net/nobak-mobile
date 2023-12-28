@@ -45,18 +45,19 @@
 // };
 
 import Constants from 'expo-constants';
-
+import { initApp } from '../utils';
 import { runFetch } from '../utils/runFetch';
 import { encrypt } from '../utils/crypto';
 import { router } from 'expo-router'
-import React from 'react';
+import * as React from 'react';
 import { useStorageState } from './useStorageState';
+import AppConfig from '../utils/AppConfig';
 
 const AuthContext = React.createContext<{ signIn: (code: string) => void; signOut: () => void; session?: string | null, isLoading: boolean } | null>(null);
 
 // This hook can be used to access the user info.
 export function useSession() {
-  const { NODE_ENV } = Constants.expoConfig?.extra  || {};
+  const { NODE_ENV } = Constants.expoConfig?.extra || {};
 
   const value = React.useContext(AuthContext);
   if (NODE_ENV !== 'production') {
@@ -82,11 +83,19 @@ const signIn = async (code: string) => {
 export function AuthProvider(props: React.PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
 
-  const hasAccount = true;
   React.useEffect(() => {
-    // if (!hasAccount) {
-    //   router.push('/onboard/greetings')
-    // }
+    (async () => {
+      await initApp();
+      await AppConfig.loadSettings();
+      console.info('App Initialization:', { deviceInstallationId: AppConfig.deviceInstallationId });
+      if (!AppConfig.tour) {
+        router.push('/onboard/greetings')
+      }
+    })();
+  }, []);
+
+  React.useEffect(() => {
+
     if (session === null) {
       router.push('/sign_in')
     }

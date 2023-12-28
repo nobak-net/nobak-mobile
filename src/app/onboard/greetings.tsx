@@ -1,6 +1,13 @@
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import Icon from '../../components/Icon';
+import { View, Text, StyleSheet } from 'react-native';
+import { colors, texts, Button } from 'nobak-native-design-system';
+import AppConfig from '../../utils/AppConfig';
+import { router } from 'expo-router'
 
+function onTourComplete() {
+    AppConfig.tour = true; // Set the tour as completed
+    router.push('/sign_in')
+    // Additional logic for after the tour is completed
+}
 // Shared Styles
 const styles = StyleSheet.create({
     container: {
@@ -40,7 +47,7 @@ const Greetings = () => (
         <Text style={styles.description}>
             Start securing your digital assets with us.
         </Text>
-        <Button title="Get Started" onPress={() => { }} />
+        <Button text="Get Started" onPress={() => onTourComplete()} />
         {/* <Icon name="Analytics" /> */}
     </View>
 );
