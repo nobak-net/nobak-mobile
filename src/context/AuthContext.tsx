@@ -91,7 +91,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const settings = await AppConfig.initialize();
       console.log('settings', settings)
       console.info('App Initialization:', { deviceInstallationId: settings.deviceInstallationId });
-      if (settings.tour) {
+      if (!settings.tour) {
         router.push('/onboard/greetings')
       }
     })();

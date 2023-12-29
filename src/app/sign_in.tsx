@@ -1,17 +1,20 @@
 import { router } from 'expo-router';
 import * as React from 'react';
-import { View, StyleSheet, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
 import { encrypt } from '../utils/crypto';
 import { useSession } from '../context/AuthContext';
 import { runFetch } from '../utils/runFetch';
 import { Form } from 'nobak-native-design-system';
+import { useLocalization } from '../context';
 
 export default function SignIn() {
+  const { translations } = useLocalization();
+
   const { emailChallenge } = useSession();
 
   const [email, setEmail] = React.useState('');
 
-  const sendMail = async ({email}: any) => {
+  const sendMail = async ({ email }: any) => {
     console.log('email', email)
     if (email) {
       const payload = encrypt({ email: email }, 'ThisIs32BytesLongSecretForAES!!!')
@@ -42,6 +45,8 @@ export default function SignIn() {
           ]
           }
             onSubmit={sendMail} />
+          <Text>{translations.welcome}</Text>
+
         </View>
       </View>
     </TouchableWithoutFeedback>
