@@ -1,7 +1,7 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-59602a417dc5",
-  "main": "expo-router/entry",
+  "version": "0.0.1-6f4930a59551",
+  "main": "src/index",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -31,7 +31,7 @@
     "expo-secure-store": "~12.3.1",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
-    "nobak-native-design-system": "^0.0.1-bcc659428325",
+    "nobak-native-design-system": "^0.0.1-c3611943c93a",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-gesture-handler": "~2.12.0",

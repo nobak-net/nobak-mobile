@@ -19,7 +19,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/index.js", "src/index.js"  ],
   "exclude": [
     "node_modules",
     "babel.config.js",

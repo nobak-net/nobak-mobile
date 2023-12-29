@@ -10,8 +10,13 @@ export default {
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
     extra: {
+      APP_ENV: process.env.APP_ENV,
+      DEBUG: process.env.DEBUG,
       WC_ENV_PROJECT_ID: process.env.WC_ENV_PROJECT_ID,
-      NODE_ENV: process.env.NODE_ENV,
+      API_URL: process.env.API_URL,
+      STELLAR_NETWORK: process.env.STELLAR_NETWORK,
+      NETWORK_PASSPHRASE: process.env.NETWORK_PASSPHRASE,
+      HORIZON_URL: process.env.HORIZON_URL
     },
     splash: {
       image: './assets/splash.png',

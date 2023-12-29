@@ -45,22 +45,25 @@
 // };
 
 import Constants from 'expo-constants';
-import { initApp } from '../utils';
 import { runFetch } from '../utils/runFetch';
 import { encrypt } from '../utils/crypto';
 import { router } from 'expo-router'
 import * as React from 'react';
 import { useStorageState } from './useStorageState';
 import AppConfig from '../utils/AppConfig';
+// import { initApp } from '../utils';
+
+interface AuthProviderProps extends React.PropsWithChildren<{}> {
+}
 
 const AuthContext = React.createContext<{ signIn: (code: string) => void; signOut: () => void; session?: string | null, isLoading: boolean } | null>(null);
 
 // This hook can be used to access the user info.
 export function useSession() {
-  const { NODE_ENV } = Constants.expoConfig?.extra || {};
+  const { APP_ENV } = Constants.expoConfig?.extra || {};
 
   const value = React.useContext(AuthContext);
-  if (NODE_ENV !== 'production') {
+  if (APP_ENV !== 'PRODUCTION') {
     if (!value) {
       throw new Error('useSession must be wrapped in a <SessionProvider />');
     }
@@ -80,15 +83,15 @@ const signIn = async (code: string) => {
   }
 }
 
-export function AuthProvider(props: React.PropsWithChildren) {
+export function AuthProvider({ children }: AuthProviderProps) {
   const [[isLoading, session], setSession] = useStorageState('session');
 
   React.useEffect(() => {
     (async () => {
-      await initApp();
-      await AppConfig.loadSettings();
-      console.info('App Initialization:', { deviceInstallationId: AppConfig.deviceInstallationId });
-      if (!AppConfig.tour) {
+      const settings = await AppConfig.initialize();
+      console.log('settings', settings)
+      console.info('App Initialization:', { deviceInstallationId: settings.deviceInstallationId });
+      if (settings.tour) {
         router.push('/onboard/greetings')
       }
     })();
@@ -107,12 +110,12 @@ export function AuthProvider(props: React.PropsWithChildren) {
         signIn,
         signOut: () => {
           setSession(null);
-          router.push('/onboard/greetings')
+          router.push('/sign_in')
         },
         session,
         isLoading,
       }}>
-      {props.children}
+        {children}
     </AuthContext.Provider>
   );
 }
