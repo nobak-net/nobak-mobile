@@ -1,6 +1,6 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-7106432063bb",
+  "version": "0.0.1-bc0fb7ca81bc",
   "main": "src/index",
   "scripts": {
     "start": "expo start",
@@ -24,14 +24,17 @@
     "expo": "~49.0.15",
     "expo-barcode-scanner": "~12.5.3",
     "expo-camera": "~13.4.4",
+    "expo-haptics": "~12.4.0",
     "expo-linking": "~5.0.2",
     "expo-local-authentication": "~13.4.1",
+    "expo-localization": "~14.3.0",
     "expo-modules-autolinking": "~1.5.0",
     "expo-router": "^2.0.10",
     "expo-secure-store": "~12.3.1",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
-    "nobak-native-design-system": "^0.0.1-c3611943c93a",
+    "nobak-native-design-system": "^0.0.1-26bd9f291c5f",
+    "node-forge": "^1.3.1",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-gesture-handler": "~2.12.0",
@@ -42,8 +45,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-uuid": "^2.0.1",
     "stellar-base": "^10.0.0",
-    "stream-browserify": "^3.0.0",
-    "expo-localization": "~14.3.0"
+    "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -52,6 +54,7 @@
     "@react-native-community/slider": "4.4.2",
     "@types/crypto-js": "^4.2.1",
     "@types/node": "^20.8.9",
+    "@types/node-forge": "^1.3.10",
     "@types/react": "^18.2.33",
     "@types/react-native": "^0.72.5",
     "@walletconnect/types": "^2.10.4",

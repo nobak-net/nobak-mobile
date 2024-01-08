@@ -100,7 +100,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   React.useEffect(() => {
 
     if (session === null) {
-      router.push('/sign_in')
+      router.push('/')
     }
   }, [session])
 

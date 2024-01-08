@@ -1,11 +1,13 @@
 // import { router, Stack } from 'expo-router';
-import { View } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { useSession } from '../../context/AuthContext';
 import { Tabs } from 'expo-router/tabs';
 import { Symbol } from 'nobak-native-design-system';
 import { WalletProvider } from '../../context/WalletContext';
-import { colors } from 'nobak-native-design-system';
+import { router } from 'expo-router'
+import { colors, TabButton } from 'nobak-native-design-system';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
@@ -18,7 +20,6 @@ export default function AppLayout() {
         screenOptions={{
           tabBarActiveTintColor: colors.primary[100],
           tabBarActiveBackgroundColor: colors.primary[2400],
-
           tabBarAllowFontScaling: false,
           tabBarStyle: {
             height: 100,
@@ -34,13 +35,33 @@ export default function AppLayout() {
         }}>
         <Tabs.Screen
           name="index"
-          options={{
-            title: "Account",
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Symbol type="Star" color={color} />
+          options={
+            {
+            tabBarButton: (props) => (
+              <TabButton 
+                {...props}
+                text="Account" 
+              />
             ),
-          }} />
+            }
+          }
+          // options={({
+          //   navigation,
+          // }: {
+          //   navigation: SettingsNavigationProp;
+          //   route: SettingsRouteProp;
+          // }) => ({
+          //   tabBarButton: (props) => (
+          //     <MenuButton 
+          //       {...props}
+          //       label="Settings" 
+          //       isActive={navigation.isFocused()}
+          //     />
+          //   ),
+          // })}
+          
+        
+          />
         <Tabs.Screen
           name="apps"
           options={{

@@ -8,7 +8,7 @@ function onTourComplete() {
     router.push('/sign_in')
     // Additional logic for after the tour is completed
 }
-// Shared Styles
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
 // Screen 1: Greetings
 const Greetings = () => (
     <View style={styles.container}>
-        <Text style={styles.title}>Welcome to [Wallet Name]!</Text>
         <Text style={styles.description}>
             Start securing your digital assets with us.
         </Text>

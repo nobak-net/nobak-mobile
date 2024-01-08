@@ -6,7 +6,7 @@ import es from '../../metadata/locales/es.json'
 const translations = { en, es };
 
 const LocalizationContext = createContext({
-  translations: en, // default language
+  t: en, // default language
   setLanguage: (lang: string) => {}
 });
 
@@ -16,7 +16,7 @@ export const LocalizationProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState('en');
 
   const value = {
-    translations: translations[language],
+    t: translations[language],
     setLanguage
   };
 

@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import AppConfig from '../utils/AppConfig';
 import { initApp } from '../utils';
 import { router } from 'expo-router'
+import { Layout } from 'nobak-native-design-system';
 
 export const unstable_settings = {
   initialRouteName: 'sign_in',
@@ -38,7 +39,11 @@ export default function Root() {
 
   return (
     <AuthProvider>
-      <Slot />
+      <Layout>
+
+        <Slot />
+      </Layout>
+
     </AuthProvider>
   );
 }
