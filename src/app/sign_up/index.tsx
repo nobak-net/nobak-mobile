@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 
 export default function Index() {
     return (
-        <View style={styles.container}>
+        <View>
             <Text style={styles.title}>Welcome</Text>
             <Text style={styles.description}>
                 Start securing your digital assets with us.

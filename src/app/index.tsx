@@ -21,11 +21,15 @@ export default function Index() {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <Layout>
-                <Logo type="LogoFull" />
-                {/* <Text style={{ color: colors.primary[1700], ...texts.displayBold }}>{t.index.welcome}</Text> */}
-                <View style={{ gap: 12, marginTop: 24 }}>
-                    <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signIn} />
-                    <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signUp} />
+            <Logo type="LogoFull" />
+                <View style={{ marginTop: 24}}>
+                    <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Welcome!</Text>
+                    <Text style={{ color: colors.primary[2000], ...texts.P1Medium }}>Choose one of the following options to continue</Text>
+
+                    <View style={{ gap: 12, marginTop: 24 }}>
+                        <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signIn} />
+                        <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signUp} />
+                    </View>
                 </View>
             </Layout>
         </TouchableWithoutFeedback>

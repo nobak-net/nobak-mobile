@@ -1,6 +1,6 @@
 
 import React, { type ReactElement, type FunctionComponent } from "react";
-import { Modal, StyleSheet, Text, Pressable, View, Button, Image } from 'react-native';
+import { Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
 import { SignClientTypes, SessionTypes } from "@walletconnect/types";
 import {
     useInitialization,
@@ -10,7 +10,9 @@ import {
 import { getSdkError } from '@walletconnect/utils'
 import { getPublicKey, signTransaction as signTX } from "../utils/StellarAccount";
 import { parseXDR } from "../services/parseXDR";
-import { Header } from 'nobak-native-design-system'
+import { Header, colors, texts, Button } from 'nobak-native-design-system'
+
+
 type WalletProviderProps = {
     children: ReactElement;
 };
@@ -227,30 +229,29 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Pressable
-                            style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}>
-                            <Text style={styles.textStyle}>Close</Text>
+                            <Button icon="Cross" type="icon" size="tiny" />
                         </Pressable>
                         {/* {currentProposal?.params.proposer && */}
                         <View>
-                            <Image
+                            {/* <Image
                                 style={{ height: 25, width: 25 }}
                                 source={{ uri: `${currentProposal?.params.proposer.metadata.icons[0]}` }}
-                            />
-                            <Text>{currentProposal?.params.proposer.metadata.name}</Text>
-                            <Text>{currentProposal?.params.proposer.metadata.description}</Text>
-                            <Text>{currentProposal?.params.proposer.metadata.url}</Text>
+                            /> */}
+                            <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>{currentProposal?.params.proposer.metadata.name}</Text>
+                            <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>{currentProposal?.params.proposer.metadata.description}</Text>
+                            <Text style={{ color: colors.primary[2700], ...texts.P3Medium }}>{currentProposal?.params.proposer.metadata.url}</Text>
 
-                            <Button title="Accept" onPress={() => handleAccept()} />
-                            <Button title="Cancel" onPress={() => handleReject()} />
+                            <Button text="Accept" onPress={() => handleAccept()} />
+                            <Button text="Cancel" onPress={() => handleReject()} />
                         </View>
                         {/* } */}
 
                         {requestEventData?.params?.request?.params?.xdr &&
                             <View>
-                                <Text>Challenge</Text>
-                                {/* <Text>{requestEventData?.params?.request?.params?.xdr}</Text> */}
-                                <Button title="Sign" onPress={() => signTransaction()} />
+                                <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Challenge</Text>
+                                <Text style={{ color: colors.primary[1700], ...texts.P3Medium }}>{requestEventData?.params?.request?.params?.xdr}</Text>
+                                <Button text="Sign" onPress={() => signTransaction()} />
                             </View>
                         }
                     </View>

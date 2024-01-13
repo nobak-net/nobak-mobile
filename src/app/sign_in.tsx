@@ -4,7 +4,7 @@ import { View, StyleSheet, Keyboard, TouchableWithoutFeedback, Text, TouchableOp
 import { encrypt } from '../utils/crypto';
 import { useSession } from '../context/AuthContext';
 import { runFetch } from '../utils/runFetch';
-import { Form, Layout, Button, Symbol, colors, texts } from 'nobak-native-design-system';
+import { Form, Layout, Button, Symbol, colors, texts, Logo } from 'nobak-native-design-system';
 import { useLocalization } from '../context';
 
 export default function SignIn() {
@@ -32,24 +32,27 @@ export default function SignIn() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <Layout>
-        <TouchableOpacity onPress={() => router.push('/')}>
-          <Symbol type="Back" />
-        </TouchableOpacity>
-        <View style={{ marginTop: 24}}>
-          <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Sign In</Text>
-          <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Enter your email, you will be receving a code to login into your account.</Text>
-          <Form fields={[ 
-            {
-              field: {
-                type: 'text',
-                id: 'email',
-                label: 'Email',
-                placeholder: 'example@email.com',
-              }
-            },
-          ]
-          }
-            onSubmit={sendMail} />
+        <Logo type="LogoFull" />
+        <View style={{ marginTop: 24 }}>
+          <TouchableOpacity onPress={() => router.push('/')}>
+            <Symbol type="Back" />
+          </TouchableOpacity>
+          <View style={{ marginTop: 24 }}>
+            <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Sign In</Text>
+            <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Enter your email, you will be receving a code to login into your account.</Text>
+            <Form fields={[
+              {
+                field: {
+                  type: 'text',
+                  id: 'email',
+                  label: 'Email',
+                  placeholder: 'example@email.com',
+                }
+              },
+            ]
+            }
+              onSubmit={sendMail} />
+          </View>
         </View>
       </Layout>
     </TouchableWithoutFeedback>
