@@ -1,14 +1,14 @@
 import { router } from 'expo-router';
 import * as React from 'react';
-import { View, StyleSheet, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, StyleSheet, Keyboard, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
 import { encrypt } from '../utils/crypto';
 import { useSession } from '../context/AuthContext';
 import { runFetch } from '../utils/runFetch';
-import { Form } from 'nobak-native-design-system';
+import { Form, Layout, Button, Symbol, colors, texts } from 'nobak-native-design-system';
 import { useLocalization } from '../context';
 
 export default function SignIn() {
-  const { translations } = useLocalization();
+  const { t } = useLocalization();
 
   const { emailChallenge } = useSession();
 
@@ -31,9 +31,14 @@ export default function SignIn() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View style={styles.container}>
-          <Form fields={[
+      <Layout>
+        <TouchableOpacity onPress={() => router.push('/')}>
+          <Symbol type="Back" />
+        </TouchableOpacity>
+        <View style={{ marginTop: 24}}>
+          <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Sign In</Text>
+          <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Enter your email, you will be receving a code to login into your account.</Text>
+          <Form fields={[ 
             {
               field: {
                 type: 'text',
@@ -45,20 +50,8 @@ export default function SignIn() {
           ]
           }
             onSubmit={sendMail} />
-          <Text>{translations.welcome}</Text>
-
         </View>
-      </View>
+      </Layout>
     </TouchableWithoutFeedback>
-
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-  },
-});

@@ -9,7 +9,7 @@ import { useLocalization } from '../context';
 
 
 function signUp() {
-    router.push('/onboard/greetings')
+    router.push('/sign_up')
 }
 
 function signIn() {
@@ -20,14 +20,14 @@ export default function Index() {
     const { t } = useLocalization();
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View>
+            <Layout>
                 <Logo type="LogoFull" />
-                <Text style={{ color: colors.primary[1700], ...texts.displayBold }}>{t.index.welcome}</Text>
-                <View style={{ gap: 10 }}>
-                    <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signUp} />
-                    <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signIn} />
+                {/* <Text style={{ color: colors.primary[1700], ...texts.displayBold }}>{t.index.welcome}</Text> */}
+                <View style={{ gap: 12, marginTop: 24 }}>
+                    <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signIn} />
+                    <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signUp} />
                 </View>
-            </View>
+            </Layout>
         </TouchableWithoutFeedback>
     );
 }

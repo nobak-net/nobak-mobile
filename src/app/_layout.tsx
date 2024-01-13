@@ -39,11 +39,7 @@ export default function Root() {
 
   return (
     <AuthProvider>
-      <Layout>
-
         <Slot />
-      </Layout>
-
     </AuthProvider>
   );
 }

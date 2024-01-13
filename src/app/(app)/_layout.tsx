@@ -37,52 +37,48 @@ export default function AppLayout() {
           name="index"
           options={
             {
-            tabBarButton: (props) => (
-              <TabButton 
-                {...props}
-                text="Account" 
-              />
-            ),
+              headerShown: false,
+              tabBarButton: (props) => (
+                <TabButton
+                  {...props}
+                  text="Account"
+                  symbol="Star"
+
+                />
+              ),
             }
           }
-          // options={({
-          //   navigation,
-          // }: {
-          //   navigation: SettingsNavigationProp;
-          //   route: SettingsRouteProp;
-          // }) => ({
-          //   tabBarButton: (props) => (
-          //     <MenuButton 
-          //       {...props}
-          //       label="Settings" 
-          //       isActive={navigation.isFocused()}
-          //     />
-          //   ),
-          // })}
-          
-        
-          />
+        />
         <Tabs.Screen
           name="apps"
-          options={{
-            title: "Discover",
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Symbol type="World" color={color} />
-            ),
-          }} />
+          options={
+            {
+              headerShown: false,
+              tabBarButton: (props) => (
+                <TabButton
+                  {...props}
+                  text="Discover"
+                  symbol="World"
+                />
+              ),
+            }} />
         <Tabs.Screen
           name="settings"
-          options={{
-            title: "Settings",
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Symbol type="Chip" color={color} />
-            ),
-          }} />
+          options={
+            {
+              headerShown: false,
+              tabBarButton: (props) => (
+                <TabButton
+                  {...props}
+                  text="Settings"
+                  symbol="Chip"
+                />
+              ),
+            }} />
         <Tabs.Screen
           name="result"
           options={{
+            headerShown: false,
             href: null,
           }} />
       </ Tabs>

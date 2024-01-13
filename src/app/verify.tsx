@@ -1,8 +1,9 @@
 import { router } from 'expo-router';
 import React, { useRef, useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Button, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { encrypt } from '../utils/crypto';
 import { useSession } from '../context/AuthContext';
+import { Layout, Symbol, colors, texts, Button } from 'nobak-native-design-system';
 
 
 const Verify = () => {
@@ -41,8 +42,14 @@ const Verify = () => {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Layout>
+                <TouchableOpacity onPress={() => router.push('/sign_in')}>
+                    <Symbol type="Back" />
+                </TouchableOpacity>
+                <View style={{ marginTop: 24 }}>
+                    <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Enter Code</Text>
+                    <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Check your email, we just sent you a code to complete the sign in process.</Text>
+                </View>
                 <View style={styles.container}>
                     <TextInput
                         style={styles.hiddenInput}
@@ -61,7 +68,13 @@ const Verify = () => {
                         />
                     ))}
                 </View>
-            </View>
+                <View>
+                    <Text style={{ color: colors.primary[2400], ...texts.CaptionBold }}>Having trouble receving your code?</Text>
+                    <View style={{ marginTop: 8 }}>
+                        <Button text="Resend code" onPress={() => router.push('/sign_in')} />
+                    </View>
+                </View>
+            </Layout>
         </TouchableWithoutFeedback>
     );
 };

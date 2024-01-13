@@ -35,7 +35,6 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
     children,
 }) => {
     const initialized = useInitialization(); // This will now correctly be a boolean
-
     const [modalVisible, setModalVisible] = React.useState(false);
 
     const [wcuri, setWCuri] = React.useState("")
