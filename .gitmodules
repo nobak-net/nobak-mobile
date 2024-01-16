@@ -4,3 +4,6 @@
 [submodule "metadata"]
 	path = metadata
 	url = git@github.com:nobak-net/metadata.git
+[submodule "docs"]
+	path = docs
+	url = https://github.com/nobak-net/docs

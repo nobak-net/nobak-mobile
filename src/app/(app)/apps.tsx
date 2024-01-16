@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import { Button, Layout, colors, texts } from 'nobak-native-design-system';
 import { Camera } from 'expo-camera';
 import { router } from 'expo-router'
 import { useWallet } from '../../context/WalletContext';
@@ -8,7 +9,7 @@ function Apps() {
   // const navigation = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const { updateUri } = useWallet()
+  const { updateUri, appMetadata, successfulSession, disconnect } = useWallet()
 
   React.useEffect(() => {
     (async () => {
@@ -20,7 +21,7 @@ function Apps() {
   const handleBarCodeScanned = ({ type, data }: any) => {
     setScanned(true);
     updateUri(data);
-    router.push('/(app)/result');
+    // router.push('/(app)/result');
   };
 
   if (hasPermission === null) {
@@ -31,18 +32,33 @@ function Apps() {
     return <Text>No access to camera</Text>;
   }
 
+  const handleDisconnect = () => {
+    disconnect()
+    setScanned(false)
+  }
+
   return (
     <View style={styles.container}>
-      <Camera 
-        style={styles.camera} 
-        type={Camera.Constants.Type.back} 
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-      >
-        <View style={styles.layerTop} />
-        <View style={styles.focused} />
-        <View style={styles.layerBottom} />
-      </Camera>
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      {!scanned &&
+        <Camera
+          style={styles.camera}
+          type={Camera.Constants.Type.back}
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        >
+          <View style={styles.layerTop} />
+          <View style={styles.focused} />
+          <View style={styles.layerBottom} />
+        </Camera>
+      }
+      {scanned && appMetadata && successfulSession && <Layout>
+        <Text style={{ color: colors.primary[2000], ...texts.CaptionBold }}>Connected to:</Text>
+        <Text style={{ color: colors.primary[2400], ...texts.P1Medium }}>{appMetadata.name}</Text>
+        <Text style={{ color: colors.primary[1700], ...texts.P3Light }}>{appMetadata.description}</Text>
+        <View>
+          <Button text="Disconnect" onPress={() => handleDisconnect()}/>
+        </View>
+      </Layout>}
+      {/* {scanned && <Button text={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
     </View>
   );
 }

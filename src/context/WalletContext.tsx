@@ -26,6 +26,7 @@ type WalletContextType = {
     openModal: () => void;
     pair: () => void;
     disconnect: () => void;
+    appMetadata: any;
     successfulSession: boolean;
 };
 
@@ -38,12 +39,21 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
 }) => {
     const initialized = useInitialization(); // This will now correctly be a boolean
     const [modalVisible, setModalVisible] = React.useState(false);
-
     const [wcuri, setWCuri] = React.useState("")
     const [currentProposal, setCurrentProposal] = React.useState(undefined);
+    const [appMetadata, setAppMetadata] = React.useState<any>(undefined);
     const [requestSession, setRequestSession] = React.useState<any>(null);
     const [requestEventData, setRequestEventData] = React.useState<any>(null);
     const [successfulSession, setSuccessfulSession] = React.useState(false);
+
+    React.useEffect(() => {
+        (async () => {
+            if (Boolean(wcuri)) {
+                await pair();
+            }
+        })();
+    }, [wcuri]);
+
 
     React.useEffect(() => {
         if (initialized) {
@@ -51,7 +61,6 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
             web3wallet?.on("session_request", onSessionRequest);
         }
     }, [initialized]);
-
     async function pair() {
         try {
             const pairing = await web3WalletPair({ uri: wcuri });
@@ -71,9 +80,16 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
         return wcuri
     }
 
+    // const getAppMetadata = () => {
+    //     return appMetadata
+    // }
+
     const onSessionProposal = React.useCallback(
         (proposal: SignClientTypes.EventArguments["session_proposal"]) => {
             setCurrentProposal(proposal);
+            if (Boolean(proposal?.params.proposer.metadata)) {
+                setAppMetadata(proposal?.params.proposer.metadata)
+            }
         },
         []
     );
@@ -151,23 +167,6 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
             setRequestSession(requestSessionData);
             setRequestEventData(requestEvent);
             setModalVisible(true)
-
-
-            // const response = await web3wallet.respondSessionRequest({ topic, response: { id: requestEvent.id, result: { signedXDR: "AAAAAPewD+/6X8o0bx3bp49Wf+mUhG3o+TUrcjcst717DWJVAAAAyAFvzscADTkNAAAAAAAAAAAAAAACAAAAAAAAAAYAAAACWE1BVEsAAAAAAAAAAAAAAAPvNOuztX4IjvV8pztsEc1/ZnTz0G3p5Cx4vcf04+xUAAONfqTGgAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAD2NyeXB0b21hcmluZS5ldQAAAAAAAAAAAAAAAAF7DWJVAAAAQK3vfUCZ8mbjW3ssMd0n1tJTF9Fv6EbuJ6cWKkYXBqG5itqanPbFzIQoZEHbPS8nr2vo4dROvKI0uQzNcfExKwM=" }, jsonrpc: '2.0' } })
-            // console.log('response', response)
-
-            // return;
-
-
-
-            //   switch (request.method) {
-            //     case EIP155_SIGNING_METHODS.ETH_SIGN:
-            //     case EIP155_SIGNING_METHODS.PERSONAL_SIGN:
-            //       setRequestSession(requestSessionData);
-            //       setRequestEventData(requestEvent);
-            //       setSignModalVisible(true);
-            //       return;
-            //   }
         },
         []
     );
@@ -186,25 +185,16 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
             console.log('request', request)
             console.log('topic', topic)
             console.log('id', id)
-            // console.timeLog('signTX', topic, id, request)
-            // sign the message
-            // const signedMessage = await wallet.signMessage(xdr)
-            // const response = { id, result: 'XDR_HAS_BEEN_SIGNED', jsonrpc: '2.0' }
             const signedXDR = await signTX(request?.params?.xdr)
             console.log('signedXDR', signedXDR)
-            
             setRequestEventData(null)
             await web3wallet.respondSessionRequest({ topic, response: { id: id, result: { signedXDR }, jsonrpc: '2.0' } })
+            setModalVisible(!modalVisible);
         } else {
             console.log('no requestEventData')
         }
     }
 
-    // console.log('requestSessionData', requestSession)
-    // console.log('requestEventData', requestEventData)
-    // console.log('requestEventData params', requestEventData?.params)
-    // console.log('requestEventData request', requestEventData?.params?.request?.method)
-    // console.log('requestEventData prp', parseXDR(requestEventData?.params?.request?.params?.xdr))
     return (
         <WalletContext.Provider
             value={{
@@ -214,6 +204,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
                 getUri,
                 pair,
                 disconnect,
+                appMetadata,
                 successfulSession
             }}
         >
@@ -228,35 +219,36 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Pressable
-                            onPress={() => setModalVisible(!modalVisible)}>
-                            <Button icon="Cross" type="icon" size="tiny" />
-                        </Pressable>
-                        {/* {currentProposal?.params.proposer && */}
-                        <View>
-                            {/* <Image
-                                style={{ height: 25, width: 25 }}
-                                source={{ uri: `${currentProposal?.params.proposer.metadata.icons[0]}` }}
-                            /> */}
-                            <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>{currentProposal?.params.proposer.metadata.name}</Text>
-                            <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>{currentProposal?.params.proposer.metadata.description}</Text>
-                            <Text style={{ color: colors.primary[2700], ...texts.P3Medium }}>{currentProposal?.params.proposer.metadata.url}</Text>
 
-                            <Button text="Accept" onPress={() => handleAccept()} />
-                            <Button text="Cancel" onPress={() => handleReject()} />
-                        </View>
-                        {/* } */}
+                        {currentProposal?.params.proposer.metadata.name &&
+                            <View>
+                                {/* <Image
+                            style={{ height: 25, width: 25 }}
+                            source={{ uri: `${currentProposal?.params.proposer.metadata.icons[0]}` }}
+                        /> */}
+                                <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>{currentProposal?.params.proposer.metadata.name}</Text>
+                                <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>{currentProposal?.params.proposer.metadata.description}</Text>
+                                <Text style={{ color: colors.primary[2700], ...texts.P3Medium }}>{currentProposal?.params.proposer.metadata.url}</Text>
+                                <View style={{ marginTop: 24, gap: 8 }}>
+                                    <Button text="Accept" onPress={() => handleAccept()} buttonStyle={{ full: true }} />
+                                    <Button text="Cancel" onPress={() => handleReject()} buttonStyle={{ full: true }} />
+                                </View>
+                            </View>
+                        }
+
 
                         {requestEventData?.params?.request?.params?.xdr &&
                             <View>
                                 <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Challenge</Text>
                                 <Text style={{ color: colors.primary[1700], ...texts.P3Medium }}>{requestEventData?.params?.request?.params?.xdr}</Text>
-                                <Button text="Sign" onPress={() => signTransaction()} />
+                                <View style={{ marginTop: 24, gap: 8 }}>
+                                    <Button text="Sign" onPress={() => signTransaction()} buttonStyle={{ full: true }} />
+                                    <Button text="Cancel" onPress={() => setModalVisible(!modalVisible)} buttonStyle={{ full: true }} />
+                                </View>
                             </View>
                         }
                     </View>
                 </View>
-
             </Modal>
         </WalletContext.Provider>
     );
