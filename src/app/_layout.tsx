@@ -21,7 +21,7 @@ export default function Root() {
     const initializeApp = async () => {
       try {
         await SplashScreen.preventAutoHideAsync();
-        await initApp();  // Assuming initApp is defined elsewhere
+        await initApp();
       } catch (error) {
         console.error('Initialization error:', error);
       } finally {
