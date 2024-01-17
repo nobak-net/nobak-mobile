@@ -6,6 +6,7 @@ import { useSession } from '../context/AuthContext';
 import { runFetch } from '../utils/runFetch';
 import { Form, Layout, Button, Symbol, colors, texts, Logo } from 'nobak-native-design-system';
 import { useLocalization } from '../context';
+import SDK from '../utils/SDK';
 
 export default function SignIn() {
   const { t } = useLocalization();
@@ -14,18 +15,12 @@ export default function SignIn() {
 
   const [email, setEmail] = React.useState('');
 
-  const sendMail = async ({ email }: any) => {
+  const sendEmail = async ({ email }: any) => {
+
     console.log('email', email)
-    if (email) {
-      const payload = encrypt({ email: email }, 'ThisIs32BytesLongSecretForAES!!!')
-      const response = await runFetch('http://192.168.1.103:8782/auth/email', 'POST', JSON.stringify({ payload, type: 'OBJECT' }));
-      // console.log('response', response)
-      if (response.status === 200) {
-        router.replace('/verify');
-      }
-    } else {
-      // handle empty email field, maybe show an alert
-      alert('Please enter an email');
+    const response = await SDK.sendEmail({ email });
+    if (response.status === 200) {
+      router.push('/verify')
     }
   }
 
@@ -51,7 +46,7 @@ export default function SignIn() {
               },
             ]
             }
-              onSubmit={sendMail} />
+              onSubmit={sendEmail} />
           </View>
         </View>
       </Layout>
