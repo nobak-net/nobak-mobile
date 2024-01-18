@@ -25,10 +25,6 @@ export function useSession() {
   return value;
 }
 
-const emailChallenge = async (email: string) => {
-
-}
-
 const signIn = async (code: string) => {
   const response = await SDK.signIn(code);
   if (response.status === 200) {
@@ -43,15 +39,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     (async () => {
       const settings = await AppConfig.initialize();
       const { data } = await APIService.health()
-      console.log('status', data)
       if (data.status === 'ONLINE') {
         await Device.init()
       } else if (data.status === 'OFFLINE') {
         router.push('/offline')
       }
-      // console.log("deviceInfo", device)
-      console.log('settings', settings)
-      console.info('App Initialization:', { deviceInstallationId: settings.deviceInstallationId });
       if (!settings.tour) {
         router.push('/onboard/greetings')
       }
@@ -59,7 +51,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   React.useEffect(() => {
-
     if (session === null) {
       router.push('/')
     }

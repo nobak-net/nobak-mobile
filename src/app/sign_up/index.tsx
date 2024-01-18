@@ -1,48 +1,45 @@
-import React from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Link, Stack, withLayoutContext, router } from 'expo-router';
-
-// Shared Styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    description: {
-        fontSize: 16,
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    input: {
-        width: '100%',
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 15,
-    },
-    button: {
-        width: '100%',
-        padding: 10,
-    },
-});
+import { router } from 'expo-router';
+import * as React from 'react';
+import { View, Keyboard, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
+import { Form, Layout, Symbol, colors, texts, Logo } from 'nobak-native-design-system';
+import { useLocalization } from '../../context';
+import SDK from '../../utils/SDK';
 
 export default function Index() {
+
+    const sendEmail = async ({ email }: any) => {
+        const response = await SDK.sendEmail({ email });
+        if (response.status === 200) {
+            router.push('/verify')
+        }
+    }
+
     return (
-        <View>
-            <Text style={styles.title}>Welcome</Text>
-            <Text style={styles.description}>
-                Start securing your digital assets with us.
-            </Text>
-            <Button title="Back" onPress={() => router.push('/')} />
-            <Button title="Get Started" onPress={() => { }} />
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <Layout>
+                <Logo type="LogoFull" />
+                <View style={{ marginTop: 24 }}>
+                    <TouchableOpacity onPress={() => router.push('/')}>
+                        <Symbol type="Back" />
+                    </TouchableOpacity>
+                    <View style={{ marginTop: 24 }}>
+                        <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Sign Up</Text>
+                        <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Enter your email, you will be receving a code to login into your account.</Text>
+                        <Form fields={[
+                            {
+                                field: {
+                                    type: 'text',
+                                    id: 'email',
+                                    label: 'Email',
+                                    placeholder: 'example@email.com',
+                                }
+                            },
+                        ]
+                        }
+                            onSubmit={sendEmail} />
+                    </View>
+                </View>
+            </Layout>
+        </TouchableWithoutFeedback>
     )
 };

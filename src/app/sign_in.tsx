@@ -1,23 +1,14 @@
 import { router } from 'expo-router';
 import * as React from 'react';
-import { View, StyleSheet, Keyboard, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
-import { encrypt } from '../utils/crypto';
-import { useSession } from '../context/AuthContext';
-import { runFetch } from '../utils/runFetch';
-import { Form, Layout, Button, Symbol, colors, texts, Logo } from 'nobak-native-design-system';
+import { View, Keyboard, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
+import { Form, Layout, Symbol, colors, texts, Logo } from 'nobak-native-design-system';
 import { useLocalization } from '../context';
 import SDK from '../utils/SDK';
 
 export default function SignIn() {
   const { t } = useLocalization();
 
-  const { emailChallenge } = useSession();
-
-  const [email, setEmail] = React.useState('');
-
   const sendEmail = async ({ email }: any) => {
-
-    console.log('email', email)
     const response = await SDK.sendEmail({ email });
     if (response.status === 200) {
       router.push('/verify')
