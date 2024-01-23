@@ -10,6 +10,9 @@ export default {
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
     extra: {
+      "eas": {
+        "projectId": "c1d6df0d-a4ae-4ac9-9f09-57dc804f6165"
+      },
       APP_ENV: process.env.APP_ENV,
       DEBUG: process.env.DEBUG,
       WC_ENV_PROJECT_ID: process.env.WC_ENV_PROJECT_ID,
