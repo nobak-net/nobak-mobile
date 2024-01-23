@@ -1,6 +1,6 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-6921e7c5fc63",
+  "version": "0.0.1-d65034436cb5",
   "main": "src/index",
   "scripts": {
     "start": "expo start",
@@ -48,7 +48,9 @@
     "react-native-svg": "^14.1.0",
     "react-native-uuid": "^2.0.1",
     "stellar-base": "^10.0.0",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
