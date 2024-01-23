@@ -1,6 +1,6 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-a46acfc9641d",
+  "version": "0.0.1-6921e7c5fc63",
   "main": "src/index",
   "scripts": {
     "start": "expo start",
@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "reversion": "node ./scripts/reversion.js",
     "eas:build.dev.sim": "eas build --profile development --platform ios",
+    "eas:build.dev.device": "eas build --profile development-device --platform ios",
     "eas:dev": "npx expo start --dev-client"
   },
   "dependencies": {
