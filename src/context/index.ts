@@ -1,3 +1,3 @@
 export { LocalizationProvider, useLocalization } from './LocalizationContext';
-export { AuthProvider } from './AuthContext';
-export { WalletProvider } from './WalletContext';
+export { AuthProvider, useSession } from './AuthContext';
+export { WalletProvider, useWallet } from './WalletContext';

@@ -25,15 +25,16 @@ export function useSession() {
   return value;
 }
 
-const signIn = async (code: string) => {
-  const response = await SDK.signIn(code);
-  if (response.status === 200) {
-    router.push('/(app)')
-  }
-}
-
 export function AuthProvider({ children }: AuthProviderProps) {
   const [[isLoading, session], setSession] = useStorageState('session');
+  const [ email, setEmail ] = React.useState('')
+
+  const signIn = async (code: string) => {
+    const response = await SDK.signIn(code, email);
+    if (response.status === 200) {
+      router.push('/(app)')
+    }
+  }
 
   React.useEffect(() => {
     (async () => {

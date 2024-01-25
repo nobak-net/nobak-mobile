@@ -1,6 +1,7 @@
 import { TransactionBuilder } from "stellar-base"
 
 const parseXDR = (xdr: string) => {
+    console.log('FAKE XDR, UPDATE PLEASE')
     const tx = TransactionBuilder.fromXDR('AAAAAgAAAADk0hA7NYTWtjNyn3aY0TzkII8xFahb8JhCVaSmr56ecwAAAGQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAABldC+HAAAAAAAAAAEAAAABAAAAAHoKJ9BDYX3nkKDTqBtdngj5tCHF0Uy6rNgMkPNPA/ahAAAACgAAABpodHRwOi8vMTI3LjAuMC4xOjg3ODggYXV0aAAAAAAAAQAAAAY5ODg4MzgAAAAAAAAAAAABTwP2oQAAAEAJO+ygmyRALKiD40Nuf7fANBwZJoZ9qnPc8P/BMaYDhvUF8jCPLWuSAGsAd19+nurvlQpMVjvH17a8wUuvCoYN', 'Test SDF Network ; September 2015')
     console.log(JSON.stringify(tx))
 

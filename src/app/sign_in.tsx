@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import * as React from 'react';
 import { View, Keyboard, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
 import { Form, Layout, Symbol, colors, texts, Logo } from 'nobak-native-design-system';
-import { useLocalization } from '../context';
+import { useLocalization, useSession } from '../context';
 import SDK from '../utils/SDK';
 
 export default function SignIn() {
