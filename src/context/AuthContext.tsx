@@ -6,6 +6,7 @@ import AppConfig from '../utils/AppConfig';
 import SDK from '../utils/SDK';
 import Device from '../utils/Device';
 import APIService from '../utils/APIService';
+import * as Localization from 'expo-localization';
 
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }
@@ -27,7 +28,9 @@ export function useSession() {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [[isLoading, session], setSession] = useStorageState('session');
-  const [ email, setEmail ] = React.useState('')
+  const { useLocales } = Localization;
+  const [email, setEmail] = React.useState('')
+  const [localization, setLocalization] = React.useState(useLocales())
 
   const signIn = async (code: string) => {
     const response = await SDK.signIn(code, email);
@@ -41,7 +44,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const settings = await AppConfig.initialize();
       const { data } = await APIService.health()
       if (data.status === 'ONLINE') {
-        await Device.init()
+        const { currencyCode, languageCode, regionCode } = localization[0];
+        await Device.init({ currencyCode, languageCode, regionCode })
       } else if (data.status === 'OFFLINE') {
         router.push('/offline')
       }
@@ -68,7 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         session,
         isLoading,
       }}>
-        {children}
+      {children}
     </AuthContext.Provider>
   );
 }
