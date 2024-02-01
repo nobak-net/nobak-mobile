@@ -7,8 +7,9 @@ import SDK from '../utils/SDK';
 
 export default function SignIn() {
   const { t } = useLocalization();
-
+  const { setEmail } = useSession()
   const sendEmail = async ({ email }: any) => {
+    setEmail(email)
     const response = await SDK.sendEmail({ email });
     if (response.status === 200) {
       router.push('/verify')

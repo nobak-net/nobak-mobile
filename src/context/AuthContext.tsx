@@ -11,7 +11,7 @@ import * as Localization from 'expo-localization';
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }
 
-const AuthContext = React.createContext<{ signIn: (code: string) => void; signOut: () => void; session?: string | null, isLoading: boolean } | null>(null);
+const AuthContext = React.createContext<{ setEmail: (email: string) => void, signIn: (code: string) => void; signOut: () => void; session?: string | null, isLoading: boolean, email: string } | null>(null);
 
 // This hook can be used to access the user info.
 export function useSession() {
@@ -42,6 +42,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   React.useEffect(() => {
     (async () => {
       const settings = await AppConfig.initialize();
+      console.log('settings', settings)
       const { data } = await APIService.health()
       if (data.status === 'ONLINE') {
         const { currencyCode, languageCode, regionCode } = localization[0];
@@ -71,6 +72,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         },
         session,
         isLoading,
+        setEmail,
+        email
       }}>
       {children}
     </AuthContext.Provider>

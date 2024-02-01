@@ -7,7 +7,7 @@ import { Layout, Symbol, colors, texts, Button, Logo } from 'nobak-native-design
 
 
 const Verify = () => {
-    const { signIn } = useSession();
+    const { signIn, email } = useSession();
 
     const [code, setCode] = useState(new Array(6).fill(''));
     const inputRefs = useRef([]);
@@ -75,7 +75,7 @@ const Verify = () => {
                     </TouchableOpacity>
                     <View style={{ marginTop: 24 }}>
                         <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Enter Code</Text>
-                        <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Check your email, we just sent you a code to complete the sign in process.</Text>
+                        <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Check your email {email}, we just sent you a code to complete the sign in process.</Text>
                     </View>
                     <View style={styles.container}>
                         <TextInput

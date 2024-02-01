@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { colors, texts, Button } from 'nobak-native-design-system';
 import AppConfig from '../../utils/AppConfig';
 import { router } from 'expo-router'
+import { WipeData } from '../../utils/WipeData';
 
 function onTourComplete() {
     AppConfig.tour = true; // Set the tour as completed
@@ -47,6 +48,8 @@ const Greetings = () => (
             Start securing your digital assets with us.
         </Text>
         <Button text="Get Started" onPress={() => onTourComplete()} />
+        <Button text="Wipe Data" onPress={() => WipeData()} />
+
         {/* <Icon name="Analytics" /> */}
     </View>
 );
