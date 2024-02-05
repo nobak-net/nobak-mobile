@@ -1,7 +1,6 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import * as React from 'react';
-import { useStorageState } from './useStorageState';
 import AppConfig from '../utils/AppConfig';
 import SDK from '../utils/SDK';
 import Device from '../utils/Device';
@@ -54,19 +53,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         router.push('/onboard/greetings')
       }
       if (settings.token) {
-        console.log('settings.token', settings.token)
         router.push('/(app)')
       }
     })();
   }, []);
-
-  // React.useEffect(() => {
-  //   if (session === null) {
-  //     router.push('/')
-  //   }
-  // }, [session])
-
-
 
   return (
     <AuthContext.Provider
