@@ -1,6 +1,5 @@
 // import { router, Stack } from 'expo-router';
 import { View, TouchableOpacity } from 'react-native'
-import { useSession } from '../../context/AuthContext';
 import { Tabs } from 'expo-router/tabs';
 import { Symbol } from 'nobak-native-design-system';
 import { WalletProvider } from '../../context/WalletContext';
@@ -10,7 +9,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 
 export default function AppLayout() {
-  const { session, isLoading } = useSession();
   const insets = useSafeAreaInsets();
 
   // This layout can be deferred because it's not the root layout.

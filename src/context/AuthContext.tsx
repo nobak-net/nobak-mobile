@@ -11,7 +11,7 @@ import * as Localization from 'expo-localization';
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }
 
-const AuthContext = React.createContext<{ setEmail: (email: string) => void, signIn: (code: string) => void; signOut: () => void; session?: string | null, isLoading: boolean, email: string } | null>(null);
+const AuthContext = React.createContext<{ setEmail: (email: string) => void, signIn: (code: string) => void; signOut: () => void; email: string } | null>(null);
 
 // This hook can be used to access the user info.
 export function useSession() {
@@ -27,7 +27,7 @@ export function useSession() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [[isLoading, session], setSession] = useStorageState('session');
+  // const [[isLoading, session], setSession] = useStorageState('session');
   const { useLocales } = Localization;
   const [email, setEmail] = React.useState('')
   const [localization, setLocalization] = React.useState(useLocales())
@@ -53,25 +53,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (!settings.tour) {
         router.push('/onboard/greetings')
       }
+      if (settings.token) {
+        console.log('settings.token', settings.token)
+        router.push('/(app)')
+      }
     })();
   }, []);
 
-  React.useEffect(() => {
-    if (session === null) {
-      router.push('/')
-    }
-  }, [session])
+  // React.useEffect(() => {
+  //   if (session === null) {
+  //     router.push('/')
+  //   }
+  // }, [session])
+
+
 
   return (
     <AuthContext.Provider
       value={{
         signIn,
         signOut: () => {
-          setSession(null);
           router.push('/sign_in')
         },
-        session,
-        isLoading,
         setEmail,
         email
       }}>
