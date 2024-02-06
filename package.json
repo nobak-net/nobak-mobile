@@ -1,6 +1,6 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-cee6938cccca",
+  "version": "0.0.1-2e434f44a038",
   "main": "src/index",
   "scripts": {
     "start": "expo start",
@@ -8,6 +8,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "reversion": "node ./scripts/reversion.js",
+    "eas:build.production.ios": "eas build --platform ios",
     "eas:build.dev.sim": "eas build --profile development --platform ios",
     "eas:build.dev.device": "eas build --profile development-device --platform ios",
     "eas:dev": "npx expo start --dev-client"
@@ -28,6 +29,7 @@
     "expo-barcode-scanner": "~12.5.3",
     "expo-camera": "~13.4.4",
     "expo-haptics": "~12.4.0",
+    "expo-jwt": "^1.7.0",
     "expo-linking": "~5.0.2",
     "expo-local-authentication": "~13.4.1",
     "expo-localization": "~14.3.0",

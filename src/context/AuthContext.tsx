@@ -2,11 +2,12 @@ import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import * as React from 'react';
 import AppConfig from '../utils/AppConfig';
+import AppStorage from '../utils/AppStorage';
 import SDK from '../utils/SDK';
 import Device from '../utils/Device';
 import APIService from '../utils/APIService';
 import * as Localization from 'expo-localization';
-
+import { decodeJWT } from '../utils/jwt';
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }
 
@@ -41,7 +42,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   React.useEffect(() => {
     (async () => {
       const settings = await AppConfig.initialize();
-      console.log('settings', settings)
+      const session = await AppStorage.initialize()
       const { data } = await APIService.health()
       if (data.status === 'ONLINE') {
         const { currencyCode, languageCode, regionCode } = localization[0];
@@ -52,7 +53,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (!settings.tour) {
         router.push('/onboard/greetings')
       }
-      if (settings.token) {
+      if (session.token) {
+        console.log('session.token', await decodeJWT(session.token, 'ThisIs32BytesLongSecretForAES!!!'))
         router.push('/(app)')
       }
     })();
