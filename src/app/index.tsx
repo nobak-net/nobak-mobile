@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import * as React from 'react';
 import { View, StyleSheet, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
 import { encrypt } from '../utils/crypto';
-import { useSession } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { runFetch } from '../utils/runFetch';
 import { Button, Layout, Header, colors, texts, Logo } from 'nobak-native-design-system';
 import { useLocalization } from '../context';

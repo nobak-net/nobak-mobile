@@ -2,7 +2,7 @@ import { Stack } from 'expo-router/stack';
 import { Tabs } from 'expo-router/tabs';
 import * as React from 'react';
 import { Slot } from 'expo-router';
-import { AuthProvider } from '../context/AuthContext';
+import { AuthProvider, AppProvider } from '../context';
 import * as SplashScreen from 'expo-splash-screen';
 import AppConfig from '../utils/AppConfig';
 import { initApp } from '../utils';
@@ -38,8 +38,10 @@ export default function Root() {
   }
 
   return (
-    <AuthProvider>
+    <AppProvider>
+      <AuthProvider>
         <Slot />
-    </AuthProvider>
+      </AuthProvider>
+    </AppProvider>
   );
 }

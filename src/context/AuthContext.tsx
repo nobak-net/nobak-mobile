@@ -1,36 +1,31 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import * as React from 'react';
-import AppConfig from '../utils/AppConfig';
-import AppStorage from '../utils/AppStorage';
+import * as SecureStore from 'expo-secure-store';
 import SDK from '../utils/SDK';
-import Device from '../utils/Device';
-import APIService from '../utils/APIService';
-import * as Localization from 'expo-localization';
-import { decodeJWT } from '../utils/jwt';
+import { loadSession } from '../utils';
+
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }
 
-const AuthContext = React.createContext<{ setEmail: (email: string) => void, signIn: (code: string) => void; signOut: () => void; email: string } | null>(null);
+const AuthContext = React.createContext<{ setEmail: (email: string) => void, signIn: (code: string) => void; signOut: () => void; email: string, session: any } | null>(null);
 
 // This hook can be used to access the user info.
-export function useSession() {
+export function useAuth() {
   const { APP_ENV } = Constants.expoConfig?.extra || {};
 
   const value = React.useContext(AuthContext);
   if (APP_ENV !== 'PRODUCTION') {
     if (!value) {
-      throw new Error('useSession must be wrapped in a <SessionProvider />');
+      throw new Error('useAuth must be wrapped in a <AuthProvider />');
     }
   }
   return value;
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  // const [[isLoading, session], setSession] = useStorageState('session');
-  const { useLocales } = Localization;
   const [email, setEmail] = React.useState('')
-  const [localization, setLocalization] = React.useState(useLocales())
+  const [session, setSession] = React.useState<any | null>(null)
 
   const signIn = async (code: string) => {
     const response = await SDK.signIn(code, email);
@@ -39,24 +34,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  const signOut = async () => {
+    await SecureStore.setItemAsync('token', '');
+    router.push('/sign_in')
+  }
+
   React.useEffect(() => {
     (async () => {
-      const settings = await AppConfig.initialize();
-      const session = await AppStorage.initialize()
-      const { data } = await APIService.health()
-      if (data.status === 'ONLINE') {
-        const { currencyCode, languageCode, regionCode } = localization[0];
-        await Device.init({ currencyCode, languageCode, regionCode })
-      } else if (data.status === 'OFFLINE') {
-        router.push('/offline')
-      }
-      if (!settings.tour) {
-        router.push('/onboard/greetings')
-      }
-      if (session.token) {
-        console.log('session.token', await decodeJWT(session.token, 'ThisIs32BytesLongSecretForAES!!!'))
+      if (session) {
+        console.log('session: ', session)
         router.push('/(app)')
       }
+    })();
+  }, [session]);
+
+  React.useEffect(() => {
+    (async () => {
+      setSession(await loadSession())
     })();
   }, []);
 
@@ -64,9 +58,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         signIn,
-        signOut: () => {
-          router.push('/sign_in')
-        },
+        signOut,
+        session,
         setEmail,
         email
       }}>

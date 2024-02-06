@@ -2,7 +2,7 @@
 import { View, TouchableOpacity } from 'react-native'
 import { Tabs } from 'expo-router/tabs';
 import { Symbol } from 'nobak-native-design-system';
-import { WalletProvider } from '../../context/WalletContext';
+import { WalletProvider } from '../../context';
 import { router } from 'expo-router'
 import { colors, TabButton } from 'nobak-native-design-system';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

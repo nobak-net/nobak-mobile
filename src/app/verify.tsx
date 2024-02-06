@@ -2,12 +2,12 @@ import { router } from 'expo-router';
 import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { encrypt } from '../utils/crypto';
-import { useSession } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { Layout, Symbol, colors, texts, Button, Logo } from 'nobak-native-design-system';
 
 
 const Verify = () => {
-    const { signIn, email } = useSession();
+    const { signIn, email } = useAuth();
 
     const [code, setCode] = useState(new Array(6).fill(''));
     const inputRefs = useRef([]);

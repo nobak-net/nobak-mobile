@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import * as React from 'react';
 import { Link } from 'expo-router';
-import { useSession } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { Layout, colors, texts, AccountActions } from 'nobak-native-design-system';
 // import { getAccountBalance } from '../../utils/StellarAccount';
 // import * as SecureStore from 'expo-secure-store';
 
 export default function Index() {
-    const { signOut } = useSession();
+    const { signOut } = useAuth();
     const [stellarAddress, setStellarAddress] = React.useState('');
 
     React.useEffect(() => {

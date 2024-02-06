@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { useSession } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { Keypair } from 'stellar-base';
 import { signTransaction } from '../../utils/StellarAccount';
 import { Layout, colors, texts } from 'nobak-native-design-system'
 const Settings = () => {
-    const { signOut } = useSession();
+    const { signOut } = useAuth();
 
     const [stellarAddress, setStellarAddress] = React.useState('');
 
