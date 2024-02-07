@@ -1,51 +1,35 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useAuth } from '../../context/AuthContext';
 import { Keypair } from 'stellar-base';
 import { signTransaction } from '../../utils/StellarAccount';
-import { Layout, colors, texts } from 'nobak-native-design-system'
+import { Layout, colors, texts, Button } from 'nobak-native-design-system'
 const Settings = () => {
-    const { signOut } = useAuth();
-
-    const [stellarAddress, setStellarAddress] = React.useState('');
-
-    const generateKeypair = async () => {
-        const newKeypair = Keypair.random();
-
-        await SecureStore.setItemAsync('stellarAddress', newKeypair.publicKey())
-        await SecureStore.setItemAsync('stellarSecretKey', newKeypair.secret())
-    };
-
-    React.useEffect(() => {
-        (async () => {
-            const storedAddress = await SecureStore.getItemAsync('stellarAddress');
-            if (storedAddress) {
-                setStellarAddress(storedAddress);
-            }
-        })();
-    }, []);
+    const { signOut, session } = useAuth();
 
     return (
         <Layout style={{ backgroundColor: colors.primary[100] }}>
             <View>
-                <Text>Settings</Text>
-                <Button title="Generate Keypair" onPress={() => generateKeypair} />
+                {session &&
+                    <>
+                        <Text>Settings</Text>
+                        <Text>Email</Text>
+                        <Text>{session.email}</Text>
+                        <Text>Account ID</Text>
+                        <Text>{session.accountId}</Text>
 
-                <Text>Stellar Address:</Text>
-                <Text selectable={true}>{stellarAddress}</Text>
-
-                <Button title="Sign XDR" onPress={() => signTransaction('xdr')} />
-
+                        <Text>Stellar Address:</Text>
+                        <Text selectable={true}>{session.ledger_account.address}</Text>
+                    </>
+                }
             </View>
             <View>
-                <Text
-                    onPress={() => {
-                        // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
-                        signOut();
-                    }}>
-                    Sign Out
-                </Text>
+                <Button text='Sign Out' onPress={() => {
+                    // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
+                    signOut();
+                }} />
+
             </View>
         </Layout>
     );

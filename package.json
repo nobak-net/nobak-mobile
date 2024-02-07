@@ -1,6 +1,6 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-5e351fb066fc",
+  "version": "0.0.1-e5cb0552ff85",
   "main": "src/index",
   "scripts": {
     "start": "expo start",

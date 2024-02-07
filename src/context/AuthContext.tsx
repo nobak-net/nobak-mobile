@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import * as React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import SDK from '../utils/SDK';
-import { loadSession } from '../utils';
+import { loadSession, endSession } from '../utils';
 
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }
@@ -30,29 +30,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signIn = async (code: string) => {
     const response = await SDK.signIn(code, email);
     if (response.status === 200) {
+      setSession(await loadSession())
       router.push('/(app)')
     }
   }
 
   const signOut = async () => {
-    await SecureStore.setItemAsync('token', '');
+    await endSession()
+    setSession(null)
     router.push('/sign_in')
   }
 
   React.useEffect(() => {
     (async () => {
       if (session) {
-        console.log('session: ', session)
         router.push('/(app)')
       }
     })();
   }, [session]);
-
-  React.useEffect(() => {
-    (async () => {
-      setSession(await loadSession())
-    })();
-  }, []);
 
   return (
     <AuthContext.Provider
