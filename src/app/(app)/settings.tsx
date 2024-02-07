@@ -20,7 +20,7 @@ const Settings = () => {
                         <Text>{session.accountId}</Text>
 
                         <Text>Stellar Address:</Text>
-                        <Text selectable={true}>{session.ledger_account.address}</Text>
+                        <Text selectable={true}>{session.ledger_accounts[0].address}</Text>
                     </>
                 }
             </View>

@@ -12,7 +12,7 @@ export default function Index() {
     React.useEffect(() => {
         (async () => {
             if (session){
-                setAddressBalance(String(Number(await getAccountBalance(session.ledger_account.address)) * 0.11 ) )
+                setAddressBalance(String(Number(await getAccountBalance(session.ledger_accounts[0].address)) * 0.11 ) )
             }
         })();
     }, []);
@@ -23,7 +23,7 @@ export default function Index() {
             <AccountActions balance={balance} />
             <View>
                 <Text style={{ color: colors.primary[100], ...texts.CaptionBold }}>Browsing with:</Text>
-                <Text selectable={true} style={{ color: colors.primary[100], ...texts.P1Light }}>{balance}</Text>
+                <Text selectable={true} style={{ color: colors.primary[100], ...texts.P1Light }}>{session.ledger_accounts[0].address}</Text>
             </View>
         </Layout>
     );
