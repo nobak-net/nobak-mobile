@@ -9,23 +9,23 @@ const Settings = () => {
     const { signOut, session } = useAuth();
 
     return (
-        <Layout style={{ backgroundColor: colors.primary[100] }}>
+        <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
             <View>
                 {session &&
                     <>
-                        <Text>Settings</Text>
-                        <Text>Email</Text>
-                        <Text>{session.email}</Text>
-                        <Text>Account ID</Text>
-                        <Text>{session.accountId}</Text>
+                        <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Settings</Text>
+                        <Text style={{ color: colors.primary[100], ...texts.P2Bold }}>Email</Text>
+                        <Text style={{ color: colors.primary[100], ...texts.P3Medium }}>{session.email}</Text>
+                        {/* <Text style={{ color: colors.primary[100], ...texts.P2Bold }}>Account ID</Text> */}
+                        {/* <Text style={{ color: colors.primary[100], ...texts.P3Medium }}>{session.accountId}</Text> */}
 
-                        <Text>Stellar Address:</Text>
-                        <Text selectable={true}>{session.ledger_accounts[0].address}</Text>
+                        <Text style={{ color: colors.primary[100], ...texts.P2Bold }}>Account:</Text>
+                        <Text style={{ color: colors.primary[100], ...texts.P3Medium }} selectable={true}>{session.ledger_accounts[0].address}</Text>
                     </>
                 }
             </View>
             <View>
-                <Button text='Sign Out' onPress={() => {
+                <Button buttonStyle={{variant: 'secondary', size: 'tiny'}} text='Sign Out' onPress={() => {
                     // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
                     signOut();
                 }} />

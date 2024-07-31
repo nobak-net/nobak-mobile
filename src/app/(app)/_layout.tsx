@@ -93,6 +93,55 @@ export default function AppLayout() {
           options={{
             headerShown: false,
             href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
+        <Tabs.Screen
+          name="scanner"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
+        <Tabs.Screen
+          name="deposit/index"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
+        <Tabs.Screen
+          name="deposit/networks/index"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
+        <Tabs.Screen
+          name="deposit/networks/stellar_usdc"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
           }} />
       </ Tabs>
     </WalletProvider>
