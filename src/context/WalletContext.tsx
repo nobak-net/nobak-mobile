@@ -10,6 +10,7 @@ import {
 import { getSdkError } from '@walletconnect/utils'
 import { getPublicKey, signTransaction as signTX } from "../utils/StellarAccount";
 import { parseXDR } from "../services/parseXDR";
+import { router } from 'expo-router'
 import { Header, colors, texts, Button } from 'nobak-native-design-system'
 
 
@@ -178,15 +179,9 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
 
     const signTransaction = async () => {
         if (requestEventData !== null) {
-            console.log('signing Transaction')
-
             const { topic, params, id } = requestEventData
             const { request } = params
-            console.log('request', request)
-            console.log('topic', topic)
-            console.log('id', id)
             const signedXDR = await signTX(request?.params?.xdr)
-            console.log('signedXDR', signedXDR)
             setRequestEventData(null)
             await web3wallet.respondSessionRequest({ topic, response: { id: id, result: { signedXDR }, jsonrpc: '2.0' } })
             setModalVisible(!modalVisible);
@@ -208,7 +203,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
                 successfulSession
             }}
         >
-            <Header />
+            <Header action={() => router.push('/(app)/scanner')} />
             {children}
             <Modal
                 animationType="slide"

@@ -1,7 +1,6 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import * as React from 'react';
-import * as SecureStore from 'expo-secure-store';
 import SDK from '../utils/SDK';
 import { loadSession, endSession } from '../utils';
 
@@ -48,6 +47,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     })();
   }, [session]);
+
+  React.useEffect(() => {
+    (async () => {
+      setSession(await loadSession())
+    })();
+  }, []);
 
   return (
     <AuthContext.Provider
