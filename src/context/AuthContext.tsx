@@ -6,22 +6,35 @@ import { loadSession, endSession } from '../utils';
 
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }
-
-const AuthContext = React.createContext<{ setEmail: (email: string) => void, signIn: (code: string) => void; signOut: () => void; email: string, session: any } | null>(null);
+// This hook can be used to access the user info.
+const AuthContext = React.createContext<{
+  setEmail: (email: string) => void;
+  signIn: (code: string) => void;
+  signOut: () => void;
+  email: string;
+  session: any;
+} | null>(null);
 
 // This hook can be used to access the user info.
 export function useAuth() {
   const { APP_ENV } = Constants.expoConfig?.extra || {};
 
   const value = React.useContext(AuthContext);
-  if (APP_ENV !== 'PRODUCTION') {
-    if (!value) {
-      throw new Error('useAuth must be wrapped in a <AuthProvider />');
-    }
-  }
-  return value;
-}
 
+  // Check if value is null and throw an error if in non-production environment
+  if (!value && APP_ENV !== 'PRODUCTION') {
+    throw new Error('useAuth must be wrapped in a <AuthProvider />');
+  }
+
+  // Return the value or provide a fallback to prevent accessing properties on null
+  return value ?? {
+    setEmail: () => {},
+    signIn: () => {},
+    signOut: () => {},
+    email: '',
+    session: null
+  };
+}
 export function AuthProvider({ children }: AuthProviderProps) {
   const [email, setEmail] = React.useState('')
   const [session, setSession] = React.useState<any | null>(null)

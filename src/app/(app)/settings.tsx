@@ -5,9 +5,22 @@ import { useAuth } from '../../context/AuthContext';
 import { Keypair } from 'stellar-base';
 import { signTransaction } from '../../utils/StellarAccount';
 import { Layout, colors, texts, Button } from 'nobak-native-design-system'
+import SDK from '../../utils/SDK';
+import { createStellarKeypair } from '../../utils/createStellarKeypair';
+
 const Settings = () => {
     const { signOut, session } = useAuth();
 
+    const initRecovery = async () => {
+        const response = await SDK.initRecovery();
+        console.log('response', response)
+    }
+
+    const createAccount = () => {
+        const keys = createStellarKeypair()
+        console.log("KEYS", keys)
+    }
+    
     return (
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
             <View>
@@ -20,16 +33,19 @@ const Settings = () => {
                         {/* <Text style={{ color: colors.primary[100], ...texts.P3Medium }}>{session.accountId}</Text> */}
 
                         <Text style={{ color: colors.primary[100], ...texts.P2Bold }}>Account:</Text>
-                        <Text style={{ color: colors.primary[100], ...texts.P3Medium }} selectable={true}>{session.ledger_accounts[0].address}</Text>
+                        {/* <Text style={{ color: colors.primary[100], ...texts.P3Medium }} selectable={true}>{session.ledger_accounts[0].address}</Text> */}
                     </>
                 }
             </View>
             <View>
-                <Button buttonStyle={{variant: 'secondary', size: 'tiny'}} text='Sign Out' onPress={() => {
+                <Button buttonStyle={{ variant: 'secondary', size: 'tiny' }} text='Sign Out' onPress={() => {
                     // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
                     signOut();
                 }} />
 
+
+                <Button buttonStyle={{ variant: 'secondary', size: 'tiny' }} text='Recovery' onPress={() => initRecovery()} />
+                <Button buttonStyle={{ variant: 'secondary', size: 'tiny' }} text='createStellarKeypair' onPress={() => createAccount()} />
             </View>
         </Layout>
     );
