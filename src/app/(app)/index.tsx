@@ -1,28 +1,27 @@
 import { StyleSheet, Text, View } from "react-native";
 import * as React from 'react';
-import { Link } from 'expo-router';
 import { useAuth } from '../../context/AuthContext';
-import { Layout, colors, texts, AccountActions, Button } from 'nobak-native-design-system';
-import { getAccountBalance, StellarAccount } from '../../utils/StellarAccount';
+import { Layout, colors, texts, Button, AccountCard } from 'nobak-native-design-system';
+import { StellarAccount } from '../../utils/StellarAccount';
 import { StellarAccountManager } from '../../utils/StellarAccountManager';
-
 import { router } from 'expo-router';
+import { formatPublicKey } from '../../utils/StellarUtils';
 
 interface AccountWithBalance {
     publicKey: string;
     balance: string;
 }
+
 export default function Index() {
     const { session } = useAuth();
     const [accounts, setAccounts] = React.useState<StellarAccount[]>([]);
     const [loading, setLoading] = React.useState(true);
-    console.log('session', session)
 
     React.useEffect(() => {
         const fetchAccounts = async () => {
             try {
                 if (session) {
-                    const accountManager = StellarAccountManager.createInstance(session.ledger_accounts);
+                    const accountManager = StellarAccountManager.createInstance(session);
                     const accountsWithBalances = await accountManager.getAllAccountsWithBalance();
                     setAccounts(accountsWithBalances.accounts);
                 }
@@ -37,23 +36,22 @@ export default function Index() {
     }, [session]);
 
     const handleCreateAccount = async () => {
-        try {
-            // Assuming you have access to the session object    
-            if (session) {
-                // Create an instance of StellarAccountManager using the session
-                const accountManager = StellarAccountManager.createInstance(session);
-    
-                // Create a new account using the account manager
-                const newAccount = await accountManager.createAccount('your_password_here');
-                console.log("New Account Created:", newAccount);
-    
-                // Fetch and set the updated accounts with their balances
-                const accountsWithBalances = await accountManager.getAllAccountsWithBalance();
-                setAccounts(accountsWithBalances.accounts);
-            }
-        } catch (error) {
-            console.error('Error creating account:', error);
+        if (session) {
+            const accountManager = StellarAccountManager.createInstance(session);
+            await accountManager.createAccount('your_password_here', "Account #1");
+            const mergedAccounts = await accountManager.getAllAccounts();
+            setAccounts(mergedAccounts);
         }
+    };
+
+    const goNew = () => {
+        // Navigate to a new view with the publicKey as a parameter
+        router.push(`/(app)/account/new`);
+    };
+
+    const viewAccountDetails = (publicKey: string) => {
+        // Navigate to a new view with the publicKey as a parameter
+        router.push(`/(app)/account/${publicKey}`);
     };
 
     return (
@@ -67,20 +65,22 @@ export default function Index() {
                     </Text>
                 )}
                 <Button text="Create New Account" onPress={handleCreateAccount} />
+
             </View>
             <View>
                 {loading ? (
                     <Text style={{ color: colors.primary[100], ...texts.P1Light }}>Loading...</Text>
                 ) : (
                     accounts.map((account, index) => (
-                        <View key={index}>
-                            <Text style={{ color: colors.primary[100], ...texts.P1Light }}>
-                                Account: {account.publicKey}
-                            </Text>
-                            <Text style={{ color: colors.primary[100], ...texts.P1Light }}>
-                                Balance:  XLM
-                            </Text>
-                        </View>
+                        <AccountCard
+                            key={index}
+                            name={account.name}
+                            publicKey={account.publicKey}
+                            balance={""}
+                            canSign={account.canSign}
+                            isBackedUp={account.isBackedUp}
+                            viewAccount={() => viewAccountDetails(account.publicKey)} // Pass the publicKey for navigation
+                        />
                     ))
                 )}
             </View>

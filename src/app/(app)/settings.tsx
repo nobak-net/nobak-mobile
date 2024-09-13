@@ -6,7 +6,7 @@ import { Keypair } from 'stellar-base';
 import { signTransaction } from '../../utils/StellarAccount';
 import { Layout, colors, texts, Button } from 'nobak-native-design-system'
 import SDK from '../../utils/SDK';
-import { createStellarKeypair } from '../../utils/createStellarKeypair';
+import { createStellarKeypair } from '../../utils/StellarUtils';
 
 const Settings = () => {
     const { signOut, session } = useAuth();

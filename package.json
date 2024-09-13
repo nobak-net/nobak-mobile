@@ -1,6 +1,6 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-a4bca2612b98",
+  "version": "0.0.1-de11bbfb585e",
   "main": "src/index",
   "scripts": {
     "start": "expo start",
@@ -38,7 +38,7 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-web-browser": "~12.3.2",
-    "nobak-native-design-system": "^0.0.1-d952515acb77",
+    "nobak-native-design-system": "^0.0.1-092b1b0e8d3d",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-gesture-handler": "~2.12.0",

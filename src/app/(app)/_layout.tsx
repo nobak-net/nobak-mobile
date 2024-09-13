@@ -143,6 +143,28 @@ export default function AppLayout() {
 
             },
           }} />
+          <Tabs.Screen
+          name="account/[publicKey]"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
+           <Tabs.Screen
+          name="account/new"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
       </ Tabs>
     </WalletProvider>
   </>
