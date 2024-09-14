@@ -13,7 +13,6 @@ export const unstable_settings = {
   initialRouteName: 'sign_in',
 };
 
-
 export default function Root() {
   const [isReady, setIsReady] = React.useState(false);
 

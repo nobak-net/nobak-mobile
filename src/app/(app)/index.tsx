@@ -4,8 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 import { Layout, colors, texts, Button, AccountCard } from 'nobak-native-design-system';
 import { StellarAccount } from '../../utils/StellarAccount';
 import { StellarAccountManager } from '../../utils/StellarAccountManager';
-import { router } from 'expo-router';
-import { formatPublicKey } from '../../utils/StellarUtils';
+import navigation from "../../utils/Navigation";
+import { Routes } from "../../utils/Routes";
 
 interface AccountWithBalance {
     publicKey: string;
@@ -44,16 +44,6 @@ export default function Index() {
         }
     };
 
-    const goNew = () => {
-        // Navigate to a new view with the publicKey as a parameter
-        router.push(`/(app)/account/new`);
-    };
-
-    const viewAccountDetails = (publicKey: string) => {
-        // Navigate to a new view with the publicKey as a parameter
-        router.push(`/(app)/account/${publicKey}`);
-    };
-
     return (
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
             <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Balance</Text>
@@ -64,7 +54,7 @@ export default function Index() {
                         {session.ledger_accounts[0].address}
                     </Text>
                 )}
-                <Button text="Create New Account" onPress={handleCreateAccount} />
+                <Button text="Add" onPress={() => navigation.go(Routes.AddAccount)} />
 
             </View>
             <View>
@@ -79,7 +69,7 @@ export default function Index() {
                             balance={""}
                             canSign={account.canSign}
                             isBackedUp={account.isBackedUp}
-                            viewAccount={() => viewAccountDetails(account.publicKey)} // Pass the publicKey for navigation
+                            viewAccount={() => navigation.go(Routes.AccountDetails, { publicKey: account.publicKey })} // Pass the publicKey for navigation
                         />
                     ))
                 )}
