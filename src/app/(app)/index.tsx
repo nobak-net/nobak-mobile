@@ -23,7 +23,14 @@ export default function Index() {
                 if (session) {
                     const accountManager = StellarAccountManager.createInstance(session);
                     const accountsWithBalances = await accountManager.getAllAccountsWithBalance();
-                    setAccounts(accountsWithBalances.accounts);
+    
+                    // Check if accountsWithBalances.accounts is an array
+                    if (Array.isArray(accountsWithBalances.accounts)) {
+                        // console.log("accountsWithBalances.accounts", accountsWithBalances.accounts)
+                        setAccounts(accountsWithBalances.accounts);
+                    } else {
+                        console.error('Fetched accounts data is not an array:', accountsWithBalances.accounts);
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching accounts:', error);
@@ -31,7 +38,7 @@ export default function Index() {
                 setLoading(false);
             }
         };
-
+    
         fetchAccounts();
     }, [session]);
 
@@ -43,6 +50,8 @@ export default function Index() {
             setAccounts(mergedAccounts);
         }
     };
+
+    console.log("accounts", accounts)
 
     return (
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
