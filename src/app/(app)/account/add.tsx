@@ -6,7 +6,7 @@ import navigation from '../../../utils/Navigation';
 import { Routes } from '../../../utils/Routes'; // Import Routes enum
 // import { Ionicons } from '@expo/vector-icons'; // For icons (ensure you have expo-vector-icons installed)
 
-const AddAccountScreen: React.FC = () => {
+const AddAccount: React.FC = () => {
   const handleNewAccount = () => {
     navigation.go(Routes.NewAccount);
   };
@@ -32,7 +32,7 @@ const AddAccountScreen: React.FC = () => {
   );
 };
 
-export default AddAccountScreen;
+export default AddAccount;
 
 const styles = StyleSheet.create({
   container: {

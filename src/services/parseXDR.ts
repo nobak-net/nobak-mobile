@@ -1,4 +1,4 @@
-import { TransactionBuilder } from "stellar-base"
+import { TransactionBuilder } from "@stellar/stellar-base"
 
 const parseXDR = (xdr: string) => {
     console.log('FAKE XDR, UPDATE PLEASE')

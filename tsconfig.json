@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"] // Update the alias here
+    },
     "target": "esnext",
     "module": "esnext",
     "lib": [

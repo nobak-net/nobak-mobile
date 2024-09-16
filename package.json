@@ -1,9 +1,9 @@
 {
   "name": "nobak-mobile",
-  "version": "0.0.1-48c49ededc96",
+  "version": "0.0.1-5edc6e176fb4",
   "main": "src/index",
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "expo start --dev-client -c",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
@@ -21,6 +21,7 @@
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
+    "@stellar/stellar-base": "^12.1.1",
     "@walletconnect/core": "^2.10.4",
     "@walletconnect/react-native-compat": "^2.10.4",
     "@walletconnect/web3wallet": "^1.9.3",
@@ -39,7 +40,7 @@
     "expo-splash-screen": "latest",
     "expo-status-bar": "latest",
     "expo-web-browser": "latest",
-    "nobak-native-design-system": "^0.0.1-645dc91aff9c",
+    "nobak-native-design-system": "^0.0.1-8dc41b3cc207",
     "react": "18.2.0",
     "react-native": "0.74.5",
     "react-native-gesture-handler": "~2.16.1",
@@ -50,7 +51,6 @@
     "react-native-reanimated": "~3.10.1",
     "react-native-screens": "3.31.1",
     "react-native-uuid": "^2.0.1",
-    "stellar-base": "^10.0.0",
     "stream-browserify": "^3.0.0",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1"

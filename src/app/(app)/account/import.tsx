@@ -3,14 +3,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import navigation from '../../../utils/Navigation';
 
-const ImportAccountScreen: React.FC = () => {
+const ImportAccount: React.FC = () => {
   const handleBack = () => {
     navigation.back();
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Import Account Screen</Text>
+      <Text style={styles.text}>Import Account </Text>
       {/* Add your import account logic here */}
       {/* Include a back button if needed */}
       {/* <Button title="Back" onPress={handleBack} /> */}
@@ -18,7 +18,7 @@ const ImportAccountScreen: React.FC = () => {
   );
 };
 
-export default ImportAccountScreen;
+export default ImportAccount;
 
 const styles = StyleSheet.create({
   container: {

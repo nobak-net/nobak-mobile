@@ -1,25 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
 import { useAuth } from '../../context/AuthContext';
-import { Keypair } from 'stellar-base';
-import { signTransaction } from '../../utils/StellarAccount';
 import { Layout, colors, texts, Button } from 'nobak-native-design-system'
-import SDK from '../../utils/SDK';
-import { createStellarKeypair } from '../../utils/StellarUtils';
 
 const Settings = () => {
     const { signOut, session } = useAuth();
-
-    const initRecovery = async () => {
-        const response = await SDK.initRecovery();
-        console.log('response', response)
-    }
-
-    const createAccount = () => {
-        const keys = createStellarKeypair()
-        console.log("KEYS", keys)
-    }
     
     return (
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
@@ -44,8 +29,6 @@ const Settings = () => {
                 }} />
 
 
-                <Button buttonStyle={{ variant: 'secondary', size: 'tiny' }} text='Recovery' onPress={() => initRecovery()} />
-                <Button buttonStyle={{ variant: 'secondary', size: 'tiny' }} text='createStellarKeypair' onPress={() => createAccount()} />
             </View>
         </Layout>
     );

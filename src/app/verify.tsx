@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { encrypt } from '../utils/crypto';
 import { useAuth } from '../context/AuthContext';
-import { Layout, Symbol, colors, texts, Button, Logo } from 'nobak-native-design-system';
+import { Layout, Symbol, colors, texts, Button, Logo, SymbolButton } from 'nobak-native-design-system';
 
 
 const Verify = () => {
@@ -70,9 +70,8 @@ const Verify = () => {
             <Layout>
                 <Logo type="LogoFull" />
                 <View style={{ marginTop: 24 }}>
-                    <TouchableOpacity onPress={() => router.push('/sign_in')}>
-                        <Symbol type="Back" />
-                    </TouchableOpacity>
+                    <SymbolButton onPress={() => router.push('/')} type="Back" />
+                    
                     <View style={{ marginTop: 24 }}>
                         <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Enter Code</Text>
                         <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Check your email {email}, we just sent you a code to complete the sign in process.</Text>

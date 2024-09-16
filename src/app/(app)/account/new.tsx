@@ -9,7 +9,7 @@ import { usePasswordPrompt } from '../../../hooks/usePasswordPrompt';
 import { Button } from 'nobak-native-design-system';
 import { Routes } from '../../../utils/Routes';
 
-const NewAccountScreen: React.FC = () => {
+const NewAccount: React.FC = () => {
   const { session } = useAuth();
   const { promptPassword } = usePasswordPrompt();
 
@@ -49,14 +49,14 @@ const NewAccountScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>New Account Screen</Text>
+      <Text style={styles.text}>New Account </Text>
       <Button text="Create Account" onPress={handleCreateAccount} />
       {/* Include the PasswordPromptModalComponent if using a custom modal */}
     </View>
   );
 };
 
-export default NewAccountScreen;
+export default NewAccount;
 
 const styles = StyleSheet.create({
   container: {
