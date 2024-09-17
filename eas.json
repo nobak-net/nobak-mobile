@@ -17,7 +17,19 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "ios": {
+        "buildType": "release",
+        "distribution": "internal",
+        "releaseChannel": "production",
+        "autoIncrement": true
+      },
+      "android": {
+        "buildType": "app-bundle",
+        "releaseChannel": "production",
+        "autoIncrement": true
+      }
+    }
   },
   "submit": {
     "production": {}
