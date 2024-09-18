@@ -4,8 +4,8 @@
 node_modules/
 
 # Expo
-ios
-android
+ios/
+android/
 .expo/
 dist/
 web-build/

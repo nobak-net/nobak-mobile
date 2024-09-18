@@ -10,6 +10,7 @@ export default function SignIn() {
   const { setEmail } = useAuth()
   const sendEmail = async ({ email }: any) => {
     setEmail(email)
+    console.log('email', email)
     const response = await SDK.sendEmail({ email });
     if (response.status === 200) {
       router.push('/verify')

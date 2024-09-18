@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { runFetch } from '../utils/runFetch';
 import { Button, Layout, Header, colors, texts, Logo } from 'nobak-native-design-system';
 import { useLocalization } from '../context';
+// import { WipeData } from '@/utils/WipeData';
 
 
 function signUp() {
@@ -29,6 +30,7 @@ export default function Index() {
                     <View style={{ gap: 12, marginTop: 24 }}>
                         <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signIn} />
                         <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signUp} />
+                        {/* <Button type="caption" text={"Reset"} description={"Reset everything"} icon="World" buttonStyle={{ variant: 'secondary', full: true, size: 'medium' }} onPress={() => WipeData()} /> */}
                     </View>
                 </View>
             </Layout>

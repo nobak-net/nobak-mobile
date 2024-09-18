@@ -118,39 +118,39 @@ class StellarAccount {
 
 }
 
-// const getPublicKey = async () => {
-//     return await SecureStore.getItemAsync('stellarAddress');
-// }
+const getPublicKey = async () => {
+    return await SecureStore.getItemAsync('stellarAddress');
+}
 
-// const getSecretKey = async () => {
-//     return await SecureStore.getItemAsync('stellarSecretKey');
-// }
+const getSecretKey = async () => {
+    return await SecureStore.getItemAsync('stellarSecretKey');
+}
 
-// const signTransaction = async (xdr: string) => {
-//     const secret = await getSecretKey();
-//     const publicKey = await getPublicKey()
+const signTransaction = async (xdr: string) => {
+    const secret = await getSecretKey();
+    const publicKey = await getPublicKey()
 
-//     if (typeof secret === 'string') {
-//         const tx = new Transaction(xdr, "Test SDF Network ; September 2015");
-//         const keypair = Keypair.fromSecret(secret)
-//         tx.sign(keypair);
-//         const signature = tx.getKeypairSignature(keypair);
-//         const deviceSecretKey = await SecureStore.getItemAsync('deviceSecretKey');
-//         const installation_id = await SecureStore.getItemAsync('deviceInstallationId');
-//         const appPublicKey = await SecureStore.getItemAsync('appPublicKey');
-//         const key = computeSharedSecret(String(deviceSecretKey), String(appPublicKey))
-//         const payload = encrypt({ xdr: xdr, signature, publicKey }, key)
-//         const { data, message, status } = await runFetch({ url: `${API_URL}/tx/get_xdr`, method: 'POST', body: JSON.stringify({ payload, type: 'OBJECT', installation_id }) })
+    if (typeof secret === 'string') {
+        const tx = new Transaction(xdr, "Test SDF Network ; September 2015");
+        const keypair = Keypair.fromSecret(secret)
+        tx.sign(keypair);
+        const signature = tx.getKeypairSignature(keypair);
+        const deviceSecretKey = await SecureStore.getItemAsync('deviceSecretKey');
+        const installation_id = await SecureStore.getItemAsync('deviceInstallationId');
+        const appPublicKey = await SecureStore.getItemAsync('appPublicKey');
+        const key = computeSharedSecret(String(deviceSecretKey), String(appPublicKey))
+        const payload = encrypt({ xdr: xdr, signature, publicKey }, key)
+        const { data, message, status } = await runFetch({ url: `${API_URL}/tx/get_xdr`, method: 'POST', body: JSON.stringify({ payload, type: 'OBJECT', installation_id }) })
 
-//         if (status === 200) {
-//             return data.xdr;
-//         } else {
-//             return null
-//         }
-//     }
-// }
+        if (status === 200) {
+            return data.xdr;
+        } else {
+            return null
+        }
+    }
+}
 
-export { StellarAccount }
+export { StellarAccount, getPublicKey, signTransaction }
 
 
 // class StellarAccount {

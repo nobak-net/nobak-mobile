@@ -187,6 +187,17 @@ export default function AppLayout() {
 
             },
           }} />
+          <Tabs.Screen
+          name="account/recovery/[methodType]"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
       </ Tabs>
     </WalletProvider>
   </>

@@ -1,37 +1,51 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+// import { Stack } from 'expo-router/stack';
+// import { Tabs } from 'expo-router/tabs';
+import * as React from 'react';
+import { Slot } from 'expo-router';
+import { AuthProvider, AppProvider } from '../context';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+// import AppConfig from '../utils/AppConfig';
+import { initApp } from '../utils';
+// import { router } from 'expo-router'
+// import { Layout, Logo } from 'nobak-native-design-system';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+export const unstable_settings = {
+  initialRouteName: 'sign_in',
+};
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import Constants from 'expo-constants';
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+const extra = Constants.expoConfig?.extra || {};
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
 
-  if (!loaded) {
-    return null;
+export default function Root() {
+  const [isReady, setIsReady] = React.useState(false);
+  console.log("App Environment:", extra);
+  React.useEffect(() => {
+    const initializeApp = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await initApp();
+      } catch (error) {
+        console.error('Initialization error:', error);
+      } finally {
+        setIsReady(true);
+        SplashScreen.hideAsync();
+      }
+    };
+
+    initializeApp();
+  }, []);
+
+  if (!isReady) {
+    return null; // Or a custom loading component
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <AppProvider>
+      <AuthProvider>
+        <Slot />
+      </AuthProvider>
+    </AppProvider>
   );
 }

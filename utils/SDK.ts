@@ -39,7 +39,8 @@ class SDK {
 
     async sendEmail({ email }: any) {
         const { key, installation_id } = await getCredentials()
-
+        console.log('key', key)
+        console.log('installation_id', installation_id)
         if (email) {
             const payload = encrypt({ email: email }, key)
             const response = await runFetch({ url: `${API_URL}/auth/email`, method: 'POST', body: JSON.stringify({ payload, type: 'OBJECT', installation_id }) });
