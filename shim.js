@@ -1,26 +1,14 @@
-if (typeof __dirname === 'undefined') global.__dirname = '/'
-if (typeof __filename === 'undefined') global.__filename = ''
-if (typeof process === 'undefined') {
-  global.process = require('process')
-} else {
-  const bProcess = require('process')
-  for (var p in bProcess) {
-    if (!(p in process)) {
-      process[p] = bProcess[p]
-    }
-  }
-}
+import 'react-native-get-random-values';
+import 'react-native-url-polyfill/auto';
+import { Buffer } from '@craftzdog/react-native-buffer';
+import crypto from 'react-native-quick-crypto';
+import process from 'process/browser';
 
-process.browser = false
-if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
+// Polyfill Buffer globally
+global.Buffer = Buffer;
 
-// global.location = global.location || { port: 80 }
-const isDev = typeof __DEV__ === 'boolean' && __DEV__
-process.env['NODE_ENV'] = isDev ? 'development' : 'production'
-if (typeof localStorage !== 'undefined') {
-  localStorage.debug = isDev ? '*' : ''
-}
+// Polyfill crypto globally
+global.crypto = crypto;
 
-// If using the crypto shim, uncomment the following line to ensure
-// crypto is loaded first, so it can populate global.crypto
-// require('crypto')
+// Polyfill process globally
+global.process = process;

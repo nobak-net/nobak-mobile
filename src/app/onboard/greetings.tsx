@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { colors, texts, Button } from 'nobak-native-design-system';
-import AppConfig from '../../utils/AppConfig';
+import AppConfig from '@/src/utils/AppConfig';
 import { router } from 'expo-router'
-import { WipeData } from '../../utils/WipeData';
+import { WipeData } from '@/src/utils/WipeData';
 
 function onTourComplete() {
     AppConfig.tour = true; // Set the tour as completed

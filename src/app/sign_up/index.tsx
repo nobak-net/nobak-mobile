@@ -2,9 +2,9 @@ import { router } from 'expo-router';
 import * as React from 'react';
 import { View, Keyboard, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
 import { Form, Layout, SymbolButton, colors, texts, Logo } from 'nobak-native-design-system';
-import { useLocalization } from '../../context';
-import SDK from '../../utils/SDK';
-import navigation from '../../utils/Navigation';
+import { useLocalization } from '@/src/context';
+import SDK from '@/src/utils/SDK';
+import navigation from '@/src/utils/Navigation';
 
 export default function Index() {
 

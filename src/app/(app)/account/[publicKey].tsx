@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Button, SymbolButton } from 'nobak-native-design-system';
-import { formatPublicKey } from '../../../utils/StellarUtils';
-import navigation from "../../../utils/Navigation";
-import recovery from "../../../utils/Recovery";
-import { StellarAccount } from '../../../utils/StellarAccount';
-import { useRequiredParams } from "../../../hooks/useRequiredParams";
-import { usePasswordPrompt } from "../../../hooks/usePasswordPrompt";
+import { formatPublicKey } from '@/src/utils/StellarUtils';
+import navigation from "@/src/utils/Navigation";
+import recovery from "@/src/utils/Recovery";
+import { StellarAccount } from '@/src/utils/StellarAccount';
+import { useRequiredParams } from "@/src/hooks/useRequiredParams";
+import { usePasswordPrompt } from "@/src/hooks/usePasswordPrompt";
 import * as Clipboard from 'expo-clipboard';
 import { colors } from 'nobak-native-design-system';
-import { Profile, Method } from '../../../types/Profile';
-import { Routes } from '../../../utils/Routes';
+import { Profile, Method } from '@/src/types/Profile';
+import { Routes } from '@/src/utils/Routes';
 
 export default function AccountDetailsScreen() {
     const { publicKey } = useRequiredParams<{ publicKey: string }>(['publicKey']) as { publicKey: string };
@@ -123,7 +123,7 @@ export default function AccountDetailsScreen() {
                     <View style={{ marginBottom: 20 }}>
                         <Text style={{ fontWeight: '600', color: colors.primary[200] }}>Methods:</Text>
                         {profile.methods.map((method, index) => (
-                            <View key={method.id} style={{ marginLeft: 10, marginBottom: 10 }}>
+                            <View key={index} style={{ marginLeft: 10, marginBottom: 10 }}>
                                 <Text style={{ color: colors.primary[200] }}>Method {index + 1}:</Text>
                                 <Text style={{ color: colors.primary[200] }}>ID: {method.id}</Text>
                                 <Text style={{ color: colors.primary[200] }}>Type: {method.type}</Text>

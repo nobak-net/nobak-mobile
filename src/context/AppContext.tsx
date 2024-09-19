@@ -1,8 +1,8 @@
 import { router } from 'expo-router';
 import * as React from 'react';
-import AppConfig from '../utils/AppConfig';
-import Device from '../utils/Device';
-import APIService from '../utils/APIService';
+import AppConfig from '@/src/utils/AppConfig';
+import Device from '@/src/utils/Device';
+import APIService from '@/src/utils/APIService';
 import * as Localization from 'expo-localization';
 
 interface AppProviderProps extends React.PropsWithChildren<{}> {

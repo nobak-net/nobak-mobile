@@ -1,4 +1,4 @@
-[submodule "src/utils"]
+[submodule "utils"]
 	path = src/utils
 	url = git@github.com:nobak-net/utils.git
 [submodule "metadata"]

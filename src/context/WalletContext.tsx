@@ -8,8 +8,8 @@ import {
     web3WalletPair,
 } from '../utils/WalletConnect';
 import { getSdkError } from '@walletconnect/utils'
-import { getPublicKey, signTransaction as signTX } from "../utils/StellarAccount";
-import { parseXDR } from "../services/parseXDR";
+import { getPublicKey, signTransaction as signTX } from "@/src/utils/StellarAccount";
+import { parseXDR } from "@/src/services/parseXDR";
 import { router } from 'expo-router'
 import { Header, colors, texts, Button } from 'nobak-native-design-system'
 

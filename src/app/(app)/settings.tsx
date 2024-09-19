@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/src/context/AuthContext';
 import { Layout, colors, texts, Button } from 'nobak-native-design-system'
 
 const Settings = () => {

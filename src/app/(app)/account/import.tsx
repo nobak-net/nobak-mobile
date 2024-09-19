@@ -1,7 +1,7 @@
 // app/account/import.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import navigation from '../../../utils/Navigation';
+import navigation from '@/src/utils/Navigation';
 
 const ImportAccount: React.FC = () => {
   const handleBack = () => {

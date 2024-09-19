@@ -1,21 +1,26 @@
-import { Stack } from 'expo-router/stack';
-import { Tabs } from 'expo-router/tabs';
+// import { Stack } from 'expo-router/stack';
+// import { Tabs } from 'expo-router/tabs';
 import * as React from 'react';
 import { Slot } from 'expo-router';
-import { AuthProvider, AppProvider } from '../context';
+import { AuthProvider, AppProvider } from '@/src/context';
 import * as SplashScreen from 'expo-splash-screen';
-import AppConfig from '../utils/AppConfig';
-import { initApp } from '../utils';
-import { router } from 'expo-router'
-import { Layout, Logo } from 'nobak-native-design-system';
+// import AppConfig from '../utils/AppConfig';
+import { initApp } from '@/src/utils';
+// import { router } from 'expo-router'
+// import { Layout, Logo } from 'nobak-native-design-system';
 
 export const unstable_settings = {
   initialRouteName: 'sign_in',
 };
 
+import Constants from 'expo-constants';
+
+const extra = Constants.expoConfig?.extra || {};
+
+
 export default function Root() {
   const [isReady, setIsReady] = React.useState(false);
-
+  console.log("App Environment:", extra);
   React.useEffect(() => {
     const initializeApp = async () => {
       try {
