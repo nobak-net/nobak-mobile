@@ -1,9 +1,9 @@
 import { router } from 'expo-router';
 import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
-import { encrypt } from '../utils/crypto';
-import { useAuth } from '../context/AuthContext';
-import { Layout, Symbol, colors, texts, Button, Logo, SymbolButton } from 'nobak-native-design-system';
+import { encrypt } from '@/src/utils/crypto';
+import { useAuth } from '@/src/context/AuthContext';
+import { Layout, Symbol, colors, texts, Button, Logo, SymbolButton, RCIInput } from 'nobak-native-design-system';
 
 
 const Verify = () => {
@@ -77,6 +77,7 @@ const Verify = () => {
                         <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Check your email {email}, we just sent you a code to complete the sign in process.</Text>
                     </View>
                     <View style={styles.container}>
+                        {/* <RCIInput maxLength={6} onCodeComplete={setCode}/> */}
                         <TextInput
                             style={styles.hiddenInput}
                             onContentSizeChange={handlePaste}

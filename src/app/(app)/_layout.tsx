@@ -2,7 +2,7 @@
 import { View, TouchableOpacity } from 'react-native'
 import { Tabs } from 'expo-router/tabs';
 import { Symbol } from 'nobak-native-design-system';
-import { WalletProvider } from '../../context';
+import { WalletProvider } from '@/src/context';
 import { router } from 'expo-router'
 import { colors, TabButton } from 'nobak-native-design-system';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -178,6 +178,17 @@ export default function AppLayout() {
           }} />
           <Tabs.Screen
           name="account/new"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
+          <Tabs.Screen
+          name="account/recovery/[methodType]"
           options={{
             headerShown: false,
             href: null,

@@ -1,7 +1,7 @@
 // hooks/useRequiredParams.ts
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
-import navigation from '../utils/Navigation';
+import navigation from '@/src/utils/Navigation';
 
 interface UseRequiredParamsOptions {
   onError?: (missingParams: string[]) => void;

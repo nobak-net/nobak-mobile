@@ -3,13 +3,13 @@ import React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { useGlobalSearchParams } from 'expo-router';
-import { useWallet } from '../../context/WalletContext';
+import { useWallet } from '@/src/context/WalletContext';
 // import { SignClientTypes, SessionTypes } from "@walletconnect/types";
 // import {
 //     useInitialization,
 //     web3wallet,
 //     web3WalletPair,
-// } from "../../utils/WalletConnect";
+// } from "@/src/utils/WalletConnect";
 // import { getSdkError } from '@walletconnect/utils'
 
 export default function ResultPage() {

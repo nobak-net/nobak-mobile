@@ -60,12 +60,15 @@ if (fs.existsSync(podfileLockPath)) {
 console.log('🔧 Installing dependencies for nobak-mobile...');
 runCommand('yarn install', { cwd: mobileDir });
 
-// Step 4: Install react-native-svg via Expo CLI
+console.log('🔧 Installing react-native-quick-crypto via Expo...');
+runCommand('npx expo install react-native-quick-crypto', { cwd: mobileDir });
+
+
 console.log('🔧 Installing react-native-svg via Expo...');
 runCommand('npx expo install react-native-svg', { cwd: mobileDir });
 
-console.log('🔧 Installing react-native-svg-transformer via Expo...');
-runCommand('npx expo install react-native-svg-transformer', { cwd: mobileDir });
+// console.log('🔧 Installing react-native-svg-transformer via Expo...');
+// runCommand('npx expo install react-native-svg-transformer', { cwd: mobileDir });
 
 // Step 5: Prebuild the Expo project
 console.log('🚀 Running Expo prebuild...');

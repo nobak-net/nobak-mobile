@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import * as React from 'react';
 import { View, Keyboard, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
 import { Form, Layout, Symbol, colors, texts, Logo, SymbolButton } from 'nobak-native-design-system';
-import { useLocalization, useAuth } from '../context';
+import { useLocalization, useAuth } from '@/src/context';
 import SDK from '../utils/SDK';
 
 export default function SignIn() {
@@ -10,6 +10,7 @@ export default function SignIn() {
   const { setEmail } = useAuth()
   const sendEmail = async ({ email }: any) => {
     setEmail(email)
+    console.log('email', email)
     const response = await SDK.sendEmail({ email });
     if (response.status === 200) {
       router.push('/verify')

@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import { useAuth } from '../../../context/AuthContext';
-import { StellarAccountManager } from '../../../utils/StellarAccountManager';
-import navigation from '../../../utils/Navigation';
-import { usePasswordPrompt } from '../../../hooks/usePasswordPrompt';
+import { useAuth } from '@/src/context/AuthContext';
+import { StellarAccountManager } from '@/src/utils/StellarAccountManager';
+import navigation from '@/src/utils/Navigation';
+import { usePasswordPrompt } from '@/src/hooks/usePasswordPrompt';
 import { Button } from 'nobak-native-design-system';
-import { Routes } from '../../../utils/Routes';
+import { Routes } from '@/src/utils/Routes';
 
 const NewAccount: React.FC = () => {
   const { session } = useAuth();

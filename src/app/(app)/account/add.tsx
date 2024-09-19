@@ -2,8 +2,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'nobak-native-design-system'; // Replace with your actual Button component
-import navigation from '../../../utils/Navigation';
-import { Routes } from '../../../utils/Routes'; // Import Routes enum
+import navigation from '@/src/utils/Navigation';
+import { Routes } from '@/src/utils/Routes'; // Import Routes enum
 // import { Ionicons } from '@expo/vector-icons'; // For icons (ensure you have expo-vector-icons installed)
 
 const AddAccount: React.FC = () => {

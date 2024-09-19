@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { Button, Layout, colors, texts } from 'nobak-native-design-system';
 import { Camera } from 'expo-camera';
 import { router } from 'expo-router'
-import { useWallet } from '../../context/WalletContext';
+import { useWallet } from '@/src/context/WalletContext';
 
 function Apps() {
   // const navigation = useNavigation();

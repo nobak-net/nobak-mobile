@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Link } from 'expo-router';
-import { AuthenticationProvider, AuthenticationContext } from '../../context/AuthContext';
+import { AuthenticationProvider, AuthenticationContext } from '@/src/context/AuthContext';
 
 export default function Root() {
   return (

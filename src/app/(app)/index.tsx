@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import * as React from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/src/context/AuthContext';
 import { Layout, colors, texts, Button, AccountCard } from 'nobak-native-design-system';
-import { StellarAccount } from '../../utils/StellarAccount';
-import { StellarAccountManager } from '../../utils/StellarAccountManager';
-import navigation from "../../utils/Navigation";
-import { Routes } from "../../utils/Routes";
+import { StellarAccount } from '@/src/utils/StellarAccount';
+import { StellarAccountManager } from '@/src/utils/StellarAccountManager';
+import navigation from "@/src/utils/Navigation";
+import { Routes } from "@/src/utils/Routes";
 
 interface AccountWithBalance {
     publicKey: string;

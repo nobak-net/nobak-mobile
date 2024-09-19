@@ -1,7 +1,7 @@
 // LocalizationContext.tsx
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import en from '../../metadata/locales/en.json'
-import es from '../../metadata/locales/es.json'
+import en from '@/metadata/locales/en.json'
+import es from '@/metadata/locales/es.json'
 
 const translations = { en, es };
 

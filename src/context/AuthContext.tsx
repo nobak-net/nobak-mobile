@@ -1,8 +1,8 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import * as React from 'react';
-import SDK from '../utils/SDK';
-import { loadSession, endSession } from '../utils';
+import SDK from '@/src/utils/SDK';
+import { loadSession, endSession } from '@/src/utils';
 
 interface AuthProviderProps extends React.PropsWithChildren<{}> {
 }

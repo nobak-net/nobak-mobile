@@ -1,10 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import AccountHome from '../app/(app)/index'; // Replace with your actual component
-import AccountDetails from '../app/(app)/account/[publicKey]'; // Replace with your actual component
-import AddAccount from '../app/(app)/account/add';
-import ImportAccount from '../app/(app)/account/import';
-import NewAccount from '../app/(app)/account/new';
+import AccountHome from '@/src/app/(app)/index'; // Replace with your actual component
+import AccountDetails from '@/src/app/(app)/account/[publicKey]'; // Replace with your actual component
+import AddAccount from '@/src/app/(app)/account/add';
+import ImportAccount from '@/src/app/(app)/account/import';
+import NewAccount from '@/src/app/(app)/account/new';
 
 const Stack = createStackNavigator();
 

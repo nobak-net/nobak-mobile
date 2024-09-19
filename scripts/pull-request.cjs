@@ -29,7 +29,7 @@ git add . &&
 git commit -m "${newVersion}" && 
 git checkout -b "${newVersion}" && 
 git push origin "${newVersion}" &&
-git checkout main &&
+git checkout master &&
 open "https://github.com/nobak-net/nobak-mobile/pull/new/${newVersion}"
 `;
 
