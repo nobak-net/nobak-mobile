@@ -17,8 +17,6 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <Logo type="LogoFull" /> 
-
         <Button text="hello"/>
         <ThemedText type="title">Hello!</ThemedText>
         <HelloWave />

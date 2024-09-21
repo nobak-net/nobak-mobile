@@ -1,104 +1,64 @@
 import { router } from 'expo-router';
-import React, { useRef, useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
-import { encrypt } from '@/src/utils/crypto';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useAuth } from '@/src/context/AuthContext';
-import { Layout, Symbol, colors, texts, Button, Logo, SymbolButton, RCIInput } from 'nobak-native-design-system';
-
+import { Layout, SymbolButton, Button, Logo, colors, texts, RCIInput } from 'nobak-native-design-system';
 
 const Verify = () => {
     const { signIn, email } = useAuth();
+    const [code, setCode] = useState('');
 
-    const [code, setCode] = useState(new Array(6).fill(''));
-    const inputRefs = useRef([]);
+    const handleCodeComplete = async (enteredCode) => {
+        setCode(enteredCode);
+        try {
+            await signIn(enteredCode);
+        } catch (error) {
+            Alert.alert('Error', 'Invalid verification code. Please try again.');
+        }
+    };
 
-    const handleInput = (text, index) => {
-        const newCode = [...code];
-    
-        if (text) {
-            // User is typing
-            newCode[index] = text;
-            setCode(newCode);
-            if (index < 5) {
-                inputRefs.current[index + 1].focus();
+    const handlePaste = async (pastedCode) => {
+        if (pastedCode.length === 6 && /^\d+$/.test(pastedCode)) {
+            setCode(pastedCode);
+            try {
+                await signIn(pastedCode);
+            } catch (error) {
+                Alert.alert('Error', 'Invalid verification code. Please try again.');
             }
         } else {
-            // User hits backspace
-            
-            if (index > 0) {
-                // If it's not the first field, erase and move to the previous field
-                newCode[index] = '';
-                setCode(newCode);
-                inputRefs.current[index - 1].focus();
-            } else {
-                // If it's the first field, just erase
-                newCode[index] = '';
-                setCode(newCode);
-            }
+            Alert.alert('Invalid Code', 'The pasted code is not valid.');
         }
-    };
-    
-    
-    const handleKeyPress = ({ nativeEvent: { key } }, index) => {
-        if (key === 'Backspace' && index > 0 && code[index] === '') {
-            // If backspace is pressed on an empty field, move to the previous field
-            inputRefs.current[index - 1].focus();
-        }
-    };
-    
-
-    React.useEffect(() => {
-        (async () => {
-            const candidateCode = code.join('');
-            if (candidateCode.length === 6) {
-                await signIn(candidateCode);
-            }
-        })();
-    }, [code]);
-
-    const handlePaste = async () => {
-        // const clipboardContent = await Clipboard.getString();
-        // if (clipboardContent && clipboardContent.length === 6) {
-        //   const newCode = clipboardContent.split('');
-        //   setCode(newCode);
-        //   inputRefs.current[5].focus();
-        // }
     };
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <Layout>
-                <Logo type="LogoFull" />
-                <View style={{ marginTop: 24 }}>
+                <Logo type="LogoFull" theme="dark" />
+                <View style={styles.contentContainer}>
                     <SymbolButton onPress={() => router.push('/')} type="Back" />
-                    
-                    <View style={{ marginTop: 24 }}>
-                        <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Enter Code</Text>
-                        <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Check your email {email}, we just sent you a code to complete the sign in process.</Text>
+
+                    <View style={styles.textContainer}>
+                        <Text style={styles.title}>Enter Code</Text>
+                        <Text style={styles.subtitle}>
+                            Check your email {email}, we just sent you a code to complete the sign-in process.
+                        </Text>
                     </View>
-                    <View style={styles.container}>
-                        {/* <RCIInput maxLength={6} onCodeComplete={setCode}/> */}
-                        <TextInput
-                            style={styles.hiddenInput}
-                            onContentSizeChange={handlePaste}
+
+                    <View style={styles.inputContainer}>
+                        <RCIInput
                             maxLength={6}
+                            onCodeComplete={handleCodeComplete}
+                            onPaste={handlePaste}
+                            label="Verification Code"
+                            placeholder="•"
+                            keyboardType="number-pad"
+                            autoFocus
                         />
-                        {code.map((digit, index) => (
-                            <TextInput
-                                key={index}
-                                style={styles.input}
-                                keyboardType="number-pad"
-                                maxLength={1}
-                                value={digit}
-                                onKeyPress={(e) => handleKeyPress(e, index)}
-                                onChangeText={(text) => handleInput(text, index)}
-                                ref={(ref) => inputRefs.current[index] = ref}
-                            />
-                        ))}
                     </View>
-                    <View>
-                        <Text style={{ color: colors.primary[2400], ...texts.CaptionBold }}>Having trouble receving your code?</Text>
-                        <View style={{ marginTop: 8 }}>
+
+                    <View style={styles.footer}>
+                        <Text style={styles.helpText}>Having trouble receiving your code?</Text>
+                        <View style={styles.resendButton}>
                             <Button text="Resend code" onPress={() => router.push('/sign_in')} />
                         </View>
                     </View>
@@ -109,24 +69,37 @@ const Verify = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 20,
+    contentContainer: {
+        marginTop: 24,
+        flex: 1,
+        justifyContent: 'space-between',
     },
-    input: {
-        width: 40,
-        height: 60,
-        borderBottomWidth: 1,
-        borderWidth: 1,
-        borderRadius: 8,
-        textAlign: 'center',
-        marginHorizontal: 5,
+    textContainer: {
+        marginTop: 24,
     },
-    hiddenInput: {
-        height: 0,
-        width: 0,
-        opacity: 0,
+    title: {
+        color: colors.primary[100],
+        ...texts.H4Bold,
+    },
+    subtitle: {
+        color: colors.primary[400],
+        ...texts.P2Medium,
+        marginTop: 8,
+    },
+    inputContainer: {
+        marginTop: 40,
+        alignItems: 'center',
+    },
+    footer: {
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    helpText: {
+        color: colors.primary[2400],
+        ...texts.CaptionBold,
+    },
+    resendButton: {
+        marginTop: 8,
     },
 });
 

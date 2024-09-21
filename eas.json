@@ -19,7 +19,6 @@
     },
     "production": {
       "ios": {
-        "buildType": "release",
         "distribution": "internal",
         "releaseChannel": "production",
         "autoIncrement": true
