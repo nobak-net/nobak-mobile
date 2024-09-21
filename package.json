@@ -1,7 +1,7 @@
 {
   "name": "nobak",
   "main": "index",
-  "version": "0.1.0-ad838075049f",
+  "version": "0.1.0-8b8f9dd9b2dd",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
