@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Alert, ScrollView } from "react-native";
+import { Text, View, Alert, ScrollView } from "react-native";
 import { Button, SymbolButton } from 'nobak-native-design-system';
 import { formatPublicKey } from '@/src/utils/StellarUtils';
 import navigation from "@/src/utils/Navigation";
