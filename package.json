@@ -1,7 +1,7 @@
 {
   "name": "nobak",
   "main": "index",
-  "version": "0.1.0-8b8f9dd9b2dd",
+  "version": "0.1.0-608dd714480f",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -39,6 +39,7 @@
     "expo-barcode-scanner": "~13.0.1",
     "expo-camera": "~15.0.16",
     "expo-clipboard": "~6.0.3",
+    "expo-dev-client": "~4.0.26",
     "expo-haptics": "~13.0.1",
     "expo-jwt": "latest",
     "expo-linking": "~6.3.1",
@@ -50,7 +51,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
-    "nobak-native-design-system": "^0.0.1-cbd5837a29b9",
+    "nobak-native-design-system": "^0.0.1-403f0dfbadf2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",

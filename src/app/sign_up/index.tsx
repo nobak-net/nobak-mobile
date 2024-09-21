@@ -18,12 +18,12 @@ export default function Index() {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <Layout>
-                <Logo type="LogoFull" />
+                <Logo type="LogoFull" theme="dark" />
                 <View style={{ marginTop: 24 }}>
                     <SymbolButton type="Back" onPress={() => navigation.back()} />
                     <View style={{ marginTop: 24 }}>
-                        <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>Sign Up</Text>
-                        <Text style={{ color: colors.primary[2000], ...texts.P2Medium }}>Enter your email, you will be receving a code to login into your account.</Text>
+                        <Text style={{ color: colors.primary[100], ...texts.H4Bold }}>Sign Up</Text>
+                        <Text style={{ color: colors.primary[400], ...texts.P2Medium }}>Enter your email, you will be receving a code to login into your account.</Text>
                         <Form fields={[
                             {
                                 field: {
