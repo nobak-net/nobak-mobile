@@ -8,15 +8,16 @@ import { StellarAccount } from '@/src/utils/StellarAccount';
 import { useRequiredParams } from "@/src/hooks/useRequiredParams";
 import { usePasswordPrompt } from "@/src/hooks/usePasswordPrompt";
 import * as Clipboard from 'expo-clipboard';
-import { colors } from 'nobak-native-design-system';
+import { colors, texts } from 'nobak-native-design-system';
 import { Profile, Method } from '@/src/types/Profile';
 import { Routes } from '@/src/utils/Routes';
 
 export default function AccountDetailsScreen() {
     const { publicKey } = useRequiredParams<{ publicKey: string }>(['publicKey']) as { publicKey: string };
+
     const { promptPassword } = usePasswordPrompt();
     console.log('publicKey', publicKey)
-
+    const [servers, setServers] = useState<null | any>(null)
     // State to hold the profile object
     const [profile, setProfile] = useState(null);
 
@@ -25,6 +26,7 @@ export default function AccountDetailsScreen() {
             if (!publicKey) {
                 throw new Error('Public key not found');
             }
+            
             const password = await promptPassword();
             const stellarAccount = new StellarAccount(publicKey, '', '');
             await stellarAccount.loadSensitiveData(password);
@@ -52,7 +54,7 @@ export default function AccountDetailsScreen() {
             // Update the profile state with the fetched profile
             setProfile(fetchedProfile);
 
-            Alert.alert('Success', 'Profile fetched successfully!');            
+            Alert.alert('Success', 'Profile fetched successfully!');
         } catch (error: any) {
             console.error(error);
             Alert.alert('Error', error.message);
@@ -71,9 +73,18 @@ export default function AccountDetailsScreen() {
     };
 
     // Function to handle profile updates (example)
-    const handleUpdateProfile = () => {
+    const getAvailableServers = async () => {
         // Implement profile update logic here
-        Alert.alert('Update', 'Profile update functionality not implemented yet.');
+
+        const servers = await recovery.availableServers()
+        console.log('servers', servers)
+        if (servers.unpairedServers) {
+            setServers(servers.unpairedServers)
+        } else {
+            setServers(servers.pairedServers)
+        }
+        
+
     };
 
     // Helper functions to check for missing methods
@@ -82,42 +93,60 @@ export default function AccountDetailsScreen() {
         return !profile.methods.some(method => method.type === type && method.status === 'VERIFIED');
     };
 
+    const challengeServer = async (name: string) => {
+        const xdr = await recovery.authServer(name)
+        console.log('response', xdr)
+        console.log('challenge server', name)
+        if (xdr) {
+            const signedXDR = await signTransaction(xdr);
+            await recovery.verifyServer(name, signedXDR);
+        }
+    }
+
     return (
         <ScrollView contentContainerStyle={{ backgroundColor: colors.primary[2400], flexGrow: 1, padding: 20 }}>
             <SymbolButton type="Back" onPress={() => navigation.back()} />
 
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 10, color: colors.primary[200] }}>
+            <Text style={{ ...texts.H4Bold, marginVertical: 10, color: colors.primary[200] }}>
                 Public Key:
             </Text>
-            <Text selectable style={{ marginBottom: 10, color: colors.primary[200] }}>
-                {formatPublicKey(publicKey as string)}
-            </Text>
-            <Button 
-                text="Copy" 
-                type="icon" 
-                icon="Bookmark" 
-                buttonStyle={{ size: 'small', variant: 'secondary' }}
-                onPress={handleCopyPublicKey} 
-            />
+            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text selectable style={{ ...texts.P1Medium, marginBottom: 10, color: colors.primary[200] }}>
+                    {formatPublicKey(publicKey as string)}
+                </Text>
+                <Button
+                    text="Copy"
+                    icon="Bookmark"
+                    type="icon"
+                    theme="dark"
+                    buttonStyle={{ size: 'tiny', variant: 'primary' }}
+                    onPress={handleCopyPublicKey}
+                />
+            </View>
+            <View>
+                <Button
+                    text="Security"
+                    icon="Shield"
+                    type="iconText"
+                    theme="dark"
+                    onPress={handleGetXDR}
+                    buttonStyle={{ size: 'tiny', variant: 'primary' }}
+                    style={{ marginTop: 20 }}
+                />
+            </View>
 
-            <Button 
-                text="Connect & Fetch Profile" 
-                onPress={handleGetXDR} 
-                buttonStyle={{ size: 'small', variant: 'secondary' }}
-                style={{ marginTop: 20 }}
-            />
 
             {profile && (
                 <View style={{ marginTop: 30 }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, color: colors.primary[200] }}>
+                    {/* <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10, color: colors.primary[200] }}>
                         Profile Details:
-                    </Text>
-                    
+                    </Text> */}
+
                     {/* Account Information */}
-                    <View style={{ marginBottom: 20 }}>
+                    {/* <View style={{ marginBottom: 20 }}>
                         <Text style={{ fontWeight: '600', color: colors.primary[200] }}>Account:</Text>
                         <Text style={{ color: colors.primary[200] }}>ID: {profile.account}</Text>
-                    </View>
+                    </View> */}
 
                     {/* Methods */}
                     <View style={{ marginBottom: 20 }}>
@@ -139,7 +168,7 @@ export default function AccountDetailsScreen() {
                         {profile.servers.length > 0 ? (
                             profile.servers.map((server, index) => (
                                 <Text key={index} style={{ marginLeft: 10, color: colors.primary[200] }}>
-                                    - {server}
+                                    - {server.name} - {server.status}
                                 </Text>
                             ))
                         ) : (
@@ -149,16 +178,16 @@ export default function AccountDetailsScreen() {
                     {/* Buttons to Add Missing Methods */}
                     <View style={{ marginBottom: 20 }}>
                         {isMethodMissing('phone_number') && (
-                            <Button 
-                                text="Add Phone Number" 
+                            <Button
+                                text="Add Phone Number"
                                 onPress={() => navigation.go(Routes.AccountRecoveryChallenge, { methodType: 'phone_number' })}
                                 type="secondary"
                                 style={{ marginBottom: 10 }}
                             />
                         )}
                         {isMethodMissing('email') && (
-                            <Button 
-                                text="Add Email" 
+                            <Button
+                                text="Add Email"
                                 onPress={() => navigation.go(Routes.AccountRecoveryChallenge, { methodType: 'email' })}
                                 type="secondary"
                             />
@@ -166,11 +195,23 @@ export default function AccountDetailsScreen() {
                     </View>
 
                     {/* Example Button to Update Profile */}
-                    <Button 
-                        text="Update Profile" 
-                        onPress={handleUpdateProfile} 
+                    <Button
+                        text="get Servers"
+                        onPress={getAvailableServers}
                         type="secondary"
                     />
+                    <View style={{ marginBottom: 20 }}>
+                        <Text style={{ fontWeight: '600', color: colors.primary[200] }}>Servers:</Text>
+                        <View style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                            {servers && servers.length > 0 ? (
+                                servers.map((server, index) => (
+                                    <Button key={index} text={server.name} onPress={() => challengeServer(server.name)} />
+                                ))
+                            ) : (
+                                <Text style={{ marginLeft: 10, color: colors.primary[200] }}>No servers available.</Text>
+                            )}
+                        </View>
+                    </View>
                 </View>
             )}
         </ScrollView>
