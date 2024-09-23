@@ -23,7 +23,7 @@ export default function Index() {
                 if (session) {
                     const accountManager = StellarAccountManager.createInstance(session);
                     const accountsWithBalances = await accountManager.getAllAccountsWithBalance();
-    
+
                     // Check if accountsWithBalances.accounts is an array
                     if (Array.isArray(accountsWithBalances.accounts)) {
                         // console.log("accountsWithBalances.accounts", accountsWithBalances.accounts)
@@ -38,7 +38,7 @@ export default function Index() {
                 setLoading(false);
             }
         };
-    
+
         fetchAccounts();
     }, [session]);
 
@@ -55,16 +55,16 @@ export default function Index() {
 
     return (
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
-            <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Balance</Text>
-            <View>
-                <Text style={{ color: colors.primary[100], ...texts.CaptionBold }}>Browsing with:</Text>
+            {/* <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Balance</Text> */}
+            {/* <Text style={{ color: colors.primary[100], ...texts.CaptionBold }}>Browsing with:</Text>
                 {session && session.ledger_accounts && session.ledger_accounts.length > 0 && (
                     <Text selectable={true} style={{ color: colors.primary[100], ...texts.P1Light }}>
                         {session.ledger_accounts[0].address}
                     </Text>
-                )}
-                <Button text="Add" onPress={() => navigation.go(Routes.AddAccount)} />
-
+                )} */}
+            <View style={{ display: 'flex', flexDirection: 'row', gap: 8, alignSelf: 'flex-end'}}>
+                <Button text="Add Account" theme="dark" icon="Add" type="iconText" buttonStyle={{ variant: 'primary', size: 'small'}} onPress={() => navigation.go(Routes.AddAccount)} />
+                <Button text="Send" theme="dark" icon="Send" type="iconText" buttonStyle={{ variant: 'primary', size: 'small'}} onPress={() => navigation.go(Routes.AddAccount)} />
             </View>
             <View>
                 {loading ? (
