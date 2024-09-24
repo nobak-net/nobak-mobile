@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, Alert, ScrollView } from "react-native";
-import { Button, SymbolButton } from 'nobak-native-design-system';
+import { Button, SymbolButton, MethodCard, ServerCard } from 'nobak-native-design-system';
 import { formatPublicKey } from '@/src/utils/StellarUtils';
 import navigation from "@/src/utils/Navigation";
 import recovery from "@/src/utils/Recovery";
@@ -26,11 +26,10 @@ export default function AccountDetailsScreen() {
             if (!publicKey) {
                 throw new Error('Public key not found');
             }
-            
+
             const password = await promptPassword();
             const stellarAccount = new StellarAccount(publicKey, '', '');
             await stellarAccount.loadSensitiveData(password);
-
             const signedXDR = stellarAccount.signTransaction(transactionXDR, password);
             return signedXDR;
         } catch (error: any) {
@@ -39,6 +38,26 @@ export default function AccountDetailsScreen() {
             throw error;
         }
     }
+
+    const signAndSubmitTransaction = async (transactionXDR: string): Promise<string> => {
+        try {
+            if (!publicKey) {
+                throw new Error('Public key not found');
+            }
+
+            const password = await promptPassword();
+            const stellarAccount = new StellarAccount(publicKey, '', '');
+            await stellarAccount.loadSensitiveData(password);
+            const signedXDR = stellarAccount.signAndSubmitTransaction(transactionXDR, password);
+            return signedXDR;
+        } catch (error: any) {
+            console.error('Error signing transaction:', error);
+            Alert.alert('Error', error.message);
+            throw error;
+        }
+    }
+
+
 
     const handleGetXDR = async () => {
         try {
@@ -83,7 +102,7 @@ export default function AccountDetailsScreen() {
         } else {
             setServers(servers.pairedServers)
         }
-        
+
 
     };
 
@@ -103,12 +122,22 @@ export default function AccountDetailsScreen() {
         }
     }
 
+    const addServerSigners = async (servers: { name: string, status: string }[]) => {
+        const servers_id = servers.map(server => server.name)
+        const response = await recovery.addServers(servers_id)
+        console.log('response', response)
+        if (response.XDR) {
+            const transaction = await signAndSubmitTransaction(response.XDR);
+            console.log(transaction)
+        }
+    }
+
     return (
         <ScrollView contentContainerStyle={{ backgroundColor: colors.primary[2400], flexGrow: 1, padding: 20 }}>
             <SymbolButton type="Back" onPress={() => navigation.back()} />
 
             <Text style={{ ...texts.H4Bold, marginVertical: 10, color: colors.primary[200] }}>
-                Public Key:
+                Address
             </Text>
             <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text selectable style={{ ...texts.P1Medium, marginBottom: 10, color: colors.primary[200] }}>
@@ -150,15 +179,10 @@ export default function AccountDetailsScreen() {
 
                     {/* Methods */}
                     <View style={{ marginBottom: 20 }}>
-                        <Text style={{ fontWeight: '600', color: colors.primary[200] }}>Methods:</Text>
+                        <Text style={{ ...texts.H4ExtraBold, color: colors.primary[400] }}>Methods</Text>
+                        <Text style={{ ...texts.P3Medium, color: colors.primary[200] }}>Are ways in which you can recover your account in case a lost</Text>
                         {profile.methods.map((method, index) => (
-                            <View key={index} style={{ marginLeft: 10, marginBottom: 10 }}>
-                                <Text style={{ color: colors.primary[200] }}>Method {index + 1}:</Text>
-                                <Text style={{ color: colors.primary[200] }}>ID: {method.id}</Text>
-                                <Text style={{ color: colors.primary[200] }}>Type: {method.type}</Text>
-                                <Text style={{ color: colors.primary[200] }}>Value: {method.value}</Text>
-                                <Text style={{ color: colors.primary[200] }}>Status: {method.status}</Text>
-                            </View>
+                            <MethodCard type={method.type} value={method.value} status={method.status} />
                         ))}
                     </View>
 
@@ -174,6 +198,7 @@ export default function AccountDetailsScreen() {
                         ) : (
                             <Text style={{ marginLeft: 10, color: colors.primary[200] }}>No servers available.</Text>
                         )}
+                        {profile.servers.length > 1 && <Button text="Sync" onPress={() => addServerSigners(profile.servers)} />}
                     </View>
                     {/* Buttons to Add Missing Methods */}
                     <View style={{ marginBottom: 20 }}>
@@ -205,7 +230,8 @@ export default function AccountDetailsScreen() {
                         <View style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                             {servers && servers.length > 0 ? (
                                 servers.map((server, index) => (
-                                    <Button key={index} text={server.name} onPress={() => challengeServer(server.name)} />
+                                    <ServerCard name={server.name} onPress={() => challengeServer(server.name)} />
+                                    // <Button key={index} text={server.name} onPress={() => challengeServer(server.name)} />
                                 ))
                             ) : (
                                 <Text style={{ marginLeft: 10, color: colors.primary[200] }}>No servers available.</Text>

@@ -21,16 +21,15 @@ export default function Index() {
     const { t } = useLocalization();
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <Layout>
+            <Layout style={{ backgroundColor: colors.primary[2700]}}>
             <Logo type="LogoFull" theme="dark" />
                 <View style={{ marginTop: 24}}>
                     <Text style={{ color: colors.primary[100], ...texts.H4Bold }}>Welcome!</Text>
                     <Text style={{ color: colors.primary[200], ...texts.P1Medium }}>Choose one of the following options to continue</Text>
 
                     <View style={{ gap: 12, marginTop: 24 }}>
-                        <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signIn} />
-                        <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} onPress={signUp} />
-                        {/* <Button type="caption" text={"Reset"} description={"Reset everything"} icon="World" buttonStyle={{ variant: 'secondary', full: true, size: 'medium' }} onPress={() => WipeData()} /> */}
+                        <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={signIn} />
+                        <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={signUp} />
                     </View>
                 </View>
             </Layout>
