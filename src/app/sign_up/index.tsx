@@ -17,7 +17,7 @@ export default function Index() {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <Layout>
+            <Layout style={{ backgroundColor: colors.primary[2700] }}>
                 <Logo type="LogoFull" theme="dark" />
                 <View style={{ marginTop: 24 }}>
                     <SymbolButton type="Back" onPress={() => navigation.back()} />

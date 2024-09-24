@@ -19,25 +19,27 @@ export default function SignIn() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <Layout>
-        <Logo type="LogoFull" theme="dark"/>
+      <Layout style={{ backgroundColor: colors.primary[2400] }}>
+        <Logo type="LogoFull" theme="dark" />
         <View style={{ marginTop: 24 }}>
           <SymbolButton type="Back" onPress={() => router.push('/')} />
-          
+
           <View style={{ marginTop: 24 }}>
             <Text style={{ color: colors.primary[100], ...texts.H4Bold }}>Sign In</Text>
             <Text style={{ color: colors.primary[400], ...texts.P2Medium }}>Enter your email, you will be receving a code to login into your account.</Text>
-            <Form fields={[
-              {
-                field: {
-                  type: 'text',
-                  id: 'email',
-                  label: 'Email',
-                  placeholder: 'example@email.com',
-                }
-              },
-            ]
-            }
+            <Form
+              theme="dark"
+              fields={[
+                {
+                  field: {
+                    type: 'text',
+                    id: 'email',
+                    label: 'Email',
+                    placeholder: 'example@email.com',
+                  }
+                },
+              ]
+              }
               onSubmit={sendEmail} />
           </View>
         </View>

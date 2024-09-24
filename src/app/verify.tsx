@@ -32,7 +32,7 @@ const Verify = () => {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <Layout>
+            <Layout style={{backgroundColor: colors.primary[2700]}}>
                 <Logo type="LogoFull" theme="dark" />
                 <View style={styles.contentContainer}>
                     <SymbolButton onPress={() => router.push('/')} type="Back" />
@@ -49,7 +49,6 @@ const Verify = () => {
                             maxLength={6}
                             onCodeComplete={handleCodeComplete}
                             onPaste={handlePaste}
-                            label="Verification Code"
                             placeholder="•"
                             keyboardType="number-pad"
                             autoFocus
@@ -71,7 +70,9 @@ const Verify = () => {
 const styles = StyleSheet.create({
     contentContainer: {
         marginTop: 24,
-        flex: 1,
+        
+        display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'space-between',
     },
     textContainer: {
@@ -88,14 +89,13 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginTop: 40,
-        alignItems: 'center',
+        
     },
     footer: {
-        alignItems: 'center',
-        marginBottom: 20,
+        marginTop: 20,
     },
     helpText: {
-        color: colors.primary[2400],
+        color: colors.primary[400],
         ...texts.CaptionBold,
     },
     resendButton: {
