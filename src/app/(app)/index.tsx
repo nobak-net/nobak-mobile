@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import * as React from 'react';
 import { useAuth } from '@/src/context/AuthContext';
-import { Layout, colors, texts, Button, AccountCard } from 'nobak-native-design-system';
+import { Layout, colors, texts, Button, AccountCard, Symbol } from 'nobak-native-design-system';
 import { StellarAccount } from '@/src/utils/StellarAccount';
 import { StellarAccountManager } from '@/src/utils/StellarAccountManager';
 import navigation from "@/src/utils/Navigation";
@@ -54,38 +54,43 @@ export default function Index() {
     console.log("accounts", accounts)
 
     return (
-        <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
 
-            {/* <Text style={{ color: colors.primary[100], ...texts.CaptionBold }}>Browsing with:</Text>
+        <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
+            <ScrollView style={{ height: '100%' }}>
+
+                {/* <Text style={{ color: colors.primary[100], ...texts.CaptionBold }}>Browsing with:</Text>
                 {session && session.ledger_accounts && session.ledger_accounts.length > 0 && (
                     <Text selectable={true} style={{ color: colors.primary[100], ...texts.P1Light }}>
                         {session.ledger_accounts[0].address}
                     </Text>
                 )} */}
-            <View style={{ display: 'flex', flexDirection: 'row', gap: 8, alignSelf: 'flex-end' }}>
-                <Button text="Add Account" theme="dark" icon="Collections" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} />
-                <Button text="Send" theme="dark" icon="Send" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} />
-            </View>
-            <View style={{ display: 'flex', flexDirection: 'row', gap: 8, alignSelf: 'flex-end', marginTop: 24 }}>
-                <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Accounts</Text>
-            </View>
-            <View>
-                {loading ? (
-                    <Text style={{ color: colors.primary[100], ...texts.P1Light }}>Loading...</Text>
-                ) : (
-                    accounts.map((account, index) => (
-                        <AccountCard
-                            key={index}
-                            name={account.name}
-                            publicKey={account.publicKey}
-                            balance={""}
-                            canSign={account.canSign}
-                            isBackedUp={account.isBackedUp}
-                            viewAccount={() => navigation.go(Routes.AccountDetails, { publicKey: account.publicKey })} // Pass the publicKey for navigation
-                        />
-                    ))
-                )}
-            </View>
+                <View style={{ display: 'flex', flexDirection: 'row', gap: 8, alignSelf: 'flex-start' }}>
+                    <Button text="Add Account" theme="dark" icon="Collections" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} />
+                    <Button text="Send" theme="dark" icon="Send" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} />
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 24 }}>
+                    <Symbol type="Star" color={colors.primary[100]} />
+                    <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Accounts</Text>
+                </View>
+                <View>
+                    {loading ? (
+                        <Text style={{ color: colors.primary[100], ...texts.P1Light }}>Loading...</Text>
+                    ) : (
+                        accounts.map((account, index) => (
+                            <AccountCard
+                                key={index}
+                                name={account.name}
+                                publicKey={account.publicKey}
+                                balance={""}
+                                canSign={account.canSign}
+                                isBackedUp={account.isBackedUp}
+                                viewAccount={() => navigation.go(Routes.AccountDetails, { publicKey: account.publicKey })} // Pass the publicKey for navigation
+                            />
+                        ))
+                    )}
+                </View>
+            </ScrollView>
+
         </Layout>
     );
 }
