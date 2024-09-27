@@ -198,6 +198,17 @@ export default function AppLayout() {
 
             },
           }} />
+          <Tabs.Screen
+          name="account/security/account"
+          options={{
+            headerShown: false,
+            href: null,
+            tabBarStyle: {
+              borderTopWidth: 0,
+              backgroundColor: colors.primary[100],
+
+            },
+          }} />
       </ Tabs>
     </WalletProvider>
   </>

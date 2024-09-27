@@ -4653,6 +4653,11 @@ emoji-regex@^9.2.2:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
 
+encode-utf8@^1.0.3:
+  version "1.0.3"
+  resolved "http://localhost:4873/encode-utf8/-/encode-utf8-1.0.3.tgz#f30fdd31da07fb596f281beb2f6b027851994cda"
+  integrity sha512-ucAnuBEhUK4boH2HjVYG5Q2mQyPorvv0u/ocS+zhdw0S8AlHYY+GOFhP1Gio5z4icpP2ivFSvhtFjQi8+T9ppw==
+
 encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
@@ -7709,10 +7714,10 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
-nobak-native-design-system@^0.0.1-b8575a129022:
-  version "0.0.1-b8575a129022"
-  resolved "http://localhost:4873/nobak-native-design-system/-/nobak-native-design-system-0.0.1-b8575a129022.tgz#5f55b9a56a81ce732699dc5a1336324956ff03af"
-  integrity sha512-2rhUzva/a1dDH2nDZLBNTNdbneYk9ebosZvd/00ObaQcxEpFj0XiHgGTDPu9qXGqo0o+S1IMatogQXs54HPEqA==
+nobak-native-design-system@^0.0.1-0a3679a2d50b:
+  version "0.0.1-0a3679a2d50b"
+  resolved "http://localhost:4873/nobak-native-design-system/-/nobak-native-design-system-0.0.1-0a3679a2d50b.tgz#fb07e154818d65d72546fd347d16dbe8943f9c23"
+  integrity sha512-xkInK1j1heSKHL8uFQ/Ms410bCFCd1cHQWzT/7P/4LJ5/WoqOWeZ0Qh6SWXRCtsTA6lQYPFW/JV/I6duxRaZhA==
   dependencies:
     "@react-native-picker/picker" "^2.6.1"
     react-native-linear-gradient "^2.8.3"
@@ -8426,12 +8431,13 @@ qrcode-terminal@0.11.0:
   resolved "https://registry.yarnpkg.com/qrcode-terminal/-/qrcode-terminal-0.11.0.tgz#ffc6c28a2fc0bfb47052b47e23f4f446a5fbdb9e"
   integrity sha512-Uu7ii+FQy4Qf82G4xu7ShHhjhGahEpCWc3x8UavY3CTcWV+ufmmCtwkr7ZKsX42jdL0kr1B5FKUeqJvAn51jzQ==
 
-qrcode@^1.5.3:
-  version "1.5.4"
-  resolved "http://localhost:4873/qrcode/-/qrcode-1.5.4.tgz#5cb81d86eb57c675febb08cf007fff963405da88"
-  integrity sha512-1ca71Zgiu6ORjHqFBDpnSMTR2ReToX4l1Au1VFLyVeBTFavzQnv5JxMFr3ukHVKpSrSA2MCk0lNJSykjUfz7Zg==
+qrcode@1.5.3:
+  version "1.5.3"
+  resolved "http://localhost:4873/qrcode/-/qrcode-1.5.3.tgz#03afa80912c0dccf12bc93f615a535aad1066170"
+  integrity sha512-puyri6ApkEHYiVl4CFzo1tDkAZ+ATcnbJrJ6RiBM1Fhctdn/ix9MTE3hRph33omisEbC/2fcfemsseiKgBPKZg==
   dependencies:
     dijkstrajs "^1.0.1"
+    encode-utf8 "^1.0.3"
     pngjs "^5.0.0"
     yargs "^15.3.1"
 
@@ -8576,12 +8582,12 @@ react-native-prompt-android@^1.1.0:
   integrity sha512-4JoyEaT2ZnK9IH+tDFpbTiQBgva8UIFGQf4/Uw/tnEVWBERlVlzcs5B82T9BkeEhEqXhp89JaiSBnLWj30lciw==
 
 react-native-qr-svg@^1.0.1:
-  version "1.3.2"
-  resolved "http://localhost:4873/react-native-qr-svg/-/react-native-qr-svg-1.3.2.tgz#c9a9e8833693ba7232f8946ba34611f7d47a9d23"
-  integrity sha512-+YM/L7snE2nFW7/tzD8iYiwmXMWs4eyD0J5WWCF9XQzSoMYeZVGQmFZAyYc29NchF3SR11i2vIlsZ9em9xiQpA==
+  version "1.4.2"
+  resolved "http://localhost:4873/react-native-qr-svg/-/react-native-qr-svg-1.4.2.tgz#ac866f4033d64ca51e514d8cbff4573391c46246"
+  integrity sha512-dZg4YqPf2xX1mDc9LGwTIVbnng0d19jTD6hFHF+1Pc2Up8Jz8JZqIwm5inK8vgW3jt4q4wAUsTeA4fvlhno5Pg==
   dependencies:
     nanoid "^3.3.7"
-    qrcode "^1.5.3"
+    qrcode "1.5.3"
 
 react-native-quick-base64@^2.0.5, react-native-quick-base64@^2.0.7:
   version "2.1.2"

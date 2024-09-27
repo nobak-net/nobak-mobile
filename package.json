@@ -1,7 +1,7 @@
 {
   "name": "nobak-mobile",
   "main": "index",
-  "version": "0.1.0-88dfb17d5965",
+  "version": "0.1.0-a5d702cce2c0",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -52,7 +52,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
-    "nobak-native-design-system": "^0.0.1-b8575a129022",
+    "nobak-native-design-system": "^0.0.1-0a3679a2d50b",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
