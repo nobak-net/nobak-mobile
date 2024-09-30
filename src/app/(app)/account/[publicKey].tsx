@@ -205,9 +205,9 @@ export default function AccountDetailsScreen() {
               ) : (
                 <Text style={{ marginLeft: 10, color: colors.primary[200] }}>No servers available.</Text>
               )}
-              {/* {profile.servers.length > 1 && (
-                <Button text="Sync" onPress={() => addServerSigners()} />
-              )} */}
+              {profile.servers.length > 1 && (
+                <Button text="Sync" onPress={() => addServerSigners([ { name: 'acamar', status: 'online' }, { name: 'local99', status: 'online' }])} />
+              )}
             </View>
           </View>
         </View>
