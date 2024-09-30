@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import * as React from 'react';
 import { useAuth } from '@/src/context/AuthContext';
-import { Layout, colors, texts, Button, AccountCard, Symbol } from 'nobak-native-design-system';
+import { Layout, colors, texts, Button, AccountCard, Symbol, InfoCard } from 'nobak-native-design-system';
 import { StellarAccount } from '@/src/utils/StellarAccount';
 import { StellarAccountManager } from '@/src/utils/StellarAccountManager';
 import navigation from "@/src/utils/Navigation";
@@ -52,7 +52,7 @@ export default function Index() {
     };
 
     console.log("accounts", accounts)
-
+    
     return (
 
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
@@ -76,7 +76,7 @@ export default function Index() {
                     {loading ? (
                         <Text style={{ color: colors.primary[100], ...texts.P1Light }}>Loading...</Text>
                     ) : (
-                        accounts.map((account, index) => (
+                        accounts.length !== 0 ? accounts.map((account, index) => (
                             <AccountCard
                                 key={index}
                                 name={account.name}
@@ -86,7 +86,8 @@ export default function Index() {
                                 isBackedUp={account.isBackedUp}
                                 viewAccount={() => navigation.go(Routes.AccountDetails, { publicKey: account.publicKey })} // Pass the publicKey for navigation
                             />
-                        ))
+                        )) :
+                        <InfoCard symbol="" title="Empty" description="You have no accounts set yet" />
                     )}
                 </View>
             </ScrollView>
