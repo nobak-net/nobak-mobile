@@ -15,6 +15,8 @@ interface AccountWithBalance {
 export default function Index() {
     const { session } = useAuth();
     const [accounts, setAccounts] = React.useState<StellarAccount[]>([]);
+    const [balance, setBalance] = React.useState<string>('');
+
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -28,6 +30,7 @@ export default function Index() {
                     if (Array.isArray(accountsWithBalances.accounts)) {
                         // console.log("accountsWithBalances.accounts", accountsWithBalances.accounts)
                         setAccounts(accountsWithBalances.accounts);
+                        setBalance(accountsWithBalances.totalBalance)
                     } else {
                         console.error('Fetched accounts data is not an array:', accountsWithBalances.accounts);
                     }
@@ -51,13 +54,15 @@ export default function Index() {
         }
     };
 
-    console.log("accounts", accounts)
-    
+
     return (
 
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
             <ScrollView style={{ height: '100%' }}>
-
+                <View style={{ marginBottom: 20}}>
+                    <Text style={{ ...texts.H4Bold, color: colors.primary[800] }}>{balance && "Balance"}</Text>
+                    <Text style={{ ...texts.H2Bold, color: colors.primary[400] }}>{balance && balance}</Text>
+                </View>
                 {/* <Text style={{ color: colors.primary[100], ...texts.CaptionBold }}>Browsing with:</Text>
                 {session && session.ledger_accounts && session.ledger_accounts.length > 0 && (
                     <Text selectable={true} style={{ color: colors.primary[100], ...texts.P1Light }}>
@@ -87,7 +92,7 @@ export default function Index() {
                                 viewAccount={() => navigation.go(Routes.AccountDetails, { publicKey: account.publicKey })} // Pass the publicKey for navigation
                             />
                         )) :
-                        <InfoCard symbol="" title="Empty" description="You have no accounts set yet" />
+                            <InfoCard symbol="" title="Empty" description="You have no accounts set yet" />
                     )}
                 </View>
             </ScrollView>
