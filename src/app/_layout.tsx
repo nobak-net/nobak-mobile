@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Slot } from 'expo-router';
 import { AuthProvider, AppProvider } from '@/src/context';
+
 import * as SplashScreen from 'expo-splash-screen';
 // import AppConfig from '../utils/AppConfig';
 import { initApp } from '@/src/utils';

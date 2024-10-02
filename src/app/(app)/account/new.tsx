@@ -25,9 +25,9 @@ const NewAccount: React.FC = () => {
 
         // Create an instance of StellarAccountManager
         const accountManager = StellarAccountManager.createInstance(session);
-
+        // console.log('accountManager', accountManager)
         // Prompt the user for the account name (optional)
-        const accountName = 'Account #1'; // You can implement a prompt for the account name as well
+        const accountName = 'Account #4'; // You can implement a prompt for the account name as well
 
         // Create the account using the provided password and account name
         await accountManager.createAccount(password, accountName);

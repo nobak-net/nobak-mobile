@@ -19,13 +19,25 @@ export default function AccountDetailsScreen() {
 
   // State to hold the profile object
   const [profile, setProfile] = useState<Profile | null>(null);
-
+  const [accountData, setAccountData] = useState<any | null>(null);
+  console.log("signers", accountData?.signers)
+  console.log("thresholds", accountData?.thresholds)
   useFocusEffect(
     useCallback(() => {
       setProfile(null); // Reset the profile when the screen gains focus
       return () => { };
     }, [])
   );
+  React.useEffect(() => {
+    const fetchAccountData = async () => {
+      const stellarAccount = new StellarAccount(publicKey, '', '');
+      const data = await stellarAccount.getAccountData();
+      setAccountData(data)
+      // Do something with the data
+    };
+
+    fetchAccountData();
+  }, [publicKey]);
 
   const signTransaction = async (transactionXDR: string): Promise<string> => {
     try {
@@ -149,18 +161,50 @@ export default function AccountDetailsScreen() {
     <ScrollView contentContainerStyle={{ backgroundColor: colors.primary[2400], flexGrow: 1, padding: 20 }}>
       <SymbolButton type="Back" onPress={() => navigation.back()} />
       <Text style={{ ...texts.H4Bold, marginVertical: 10, color: colors.primary[200] }}>Address</Text>
-      <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Text selectable style={{ ...texts.P1Medium, marginBottom: 10, color: colors.primary[200] }}>
-          {formatPublicKey(publicKey as string)}
-        </Text>
-        <Button
-          text="Copy"
-          icon="Bookmark"
-          type="icon"
-          theme="dark"
-          buttonStyle={{ size: 'tiny', variant: 'primary' }}
-          onPress={handleCopyPublicKey}
-        />
+      <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text selectable style={{ ...texts.P1Medium, marginBottom: 10, color: colors.primary[200] }}>
+            {formatPublicKey(publicKey as string)}
+          </Text>
+          <Button
+            text="Copy"
+            icon="Bookmark"
+            type="icon"
+            theme="dark"
+            buttonStyle={{ size: 'tiny', variant: 'primary' }}
+            onPress={handleCopyPublicKey}
+          />
+        </View>
+
+        <View>{accountData &&
+          <View style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+
+              <Text style={{ ...texts.P1Bold, color: colors.primary[400] }}>Signers</Text>
+              <Text style={{ ...texts.CaptionBold, color: colors.primary[100] }}>
+                {accountData?.thresholds?.low_threshold} / {accountData?.thresholds?.med_threshold} / {accountData?.thresholds?.high_threshold}
+              </Text>
+            </View>
+            {accountData?.signers?.map((signer, index) => (
+              <View
+                key={index}
+                style={{
+                  padding: 10,
+                  marginBottom: 10,
+                  borderColor: '#ddd',
+                  borderWidth: 1,
+                  borderRadius: 8,
+                }}
+              >
+                <Text style={{ fontSize: 16, color: colors.primary[400] }}>
+                  {formatPublicKey(signer.key as string)} ({signer.weight})
+                </Text>
+
+              </View>
+            ))}
+
+          </View>}</View>
+
       </View>
       <View>
         <Button
@@ -178,7 +222,7 @@ export default function AccountDetailsScreen() {
         <View style={{ marginTop: 30 }}>
           <View style={{ marginBottom: 20 }}>
             <Text style={{ ...texts.H4ExtraBold, color: colors.primary[400] }}>Methods</Text>
-            <Text style={{ ...texts.P3Medium, color: colors.primary[200] }}>
+            <Text style={{ ...texts.P3Medium, color: colors.primary[200], marginBottom: 8 }}>
               These are ways in which you can recover your account in case it is lost.
             </Text>
             {profile.methods.map((method, index) => (
@@ -192,6 +236,9 @@ export default function AccountDetailsScreen() {
           {/* Servers */}
           <View style={{ marginBottom: 20 }}>
             <Text style={{ ...texts.H4ExtraBold, color: colors.primary[400] }}>Servers</Text>
+            <Text style={{ ...texts.P3Medium, color: colors.primary[200], marginBottom: 8 }}>
+              Available recovery servers to store your account
+            </Text>
             <View style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {profile.servers && profile.servers.length > 0 ? (
                 profile.servers.map((server, index) => (
@@ -199,14 +246,15 @@ export default function AccountDetailsScreen() {
                     key={index}
                     server={server}
                     theme="dark"
-                    onPress={() => challengeServer(server.name  )}
+                    onCheck={() => console.log("checked")}
+                    onPress={() => challengeServer(server?.name)}
                   />
                 ))
               ) : (
                 <Text style={{ marginLeft: 10, color: colors.primary[200] }}>No servers available.</Text>
               )}
               {profile.servers.length > 1 && (
-                <Button text="Sync" onPress={() => addServerSigners([ { name: 'acamar', status: 'online' }, { name: 'local99', status: 'online' }])} />
+                <Button text="Sync" onPress={() => addServerSigners([{ name: 'acamar', status: 'online' }, { name: 'local99', status: 'online' }])} />
               )}
             </View>
           </View>
