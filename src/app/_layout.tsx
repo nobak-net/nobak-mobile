@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { initApp } from '@/src/utils';
 // import { router } from 'expo-router'
 // import { Layout, Logo } from 'nobak-native-design-system';
+import { router } from 'expo-router';
 
 export const unstable_settings = {
   initialRouteName: 'sign_in',
@@ -17,11 +18,19 @@ export const unstable_settings = {
 import Constants from 'expo-constants';
 
 const extra = Constants.expoConfig?.extra || {};
+const Layout = () => {
+  
+  React.useEffect(() => {
+  router.push('/(app)')
+  }, [])
 
+  return (
+    <Slot />
+  )
+}
 
 export default function Root() {
   const [isReady, setIsReady] = React.useState(false);
-  console.log("App Environment:", extra);
   React.useEffect(() => {
     const initializeApp = async () => {
       try {
@@ -31,21 +40,24 @@ export default function Root() {
         console.error('Initialization error:', error);
       } finally {
         setIsReady(true);
+        
         SplashScreen.hideAsync();
       }
     };
 
     initializeApp();
+    
   }, []);
 
   if (!isReady) {
+    // router.push('/offline')
     return null; // Or a custom loading component
   }
 
   return (
     <AppProvider>
       <AuthProvider>
-        <Slot />
+        <Layout />
       </AuthProvider>
     </AppProvider>
   );
