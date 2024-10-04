@@ -2,7 +2,7 @@
 // import { Tabs } from 'expo-router/tabs';
 import * as React from 'react';
 import { Slot } from 'expo-router';
-import { AuthProvider, AppProvider } from '@/src/context';
+import { AuthProvider, AppProvider, DevModeProvider } from '@/src/context';
 
 import * as SplashScreen from 'expo-splash-screen';
 // import AppConfig from '../utils/AppConfig';
@@ -55,10 +55,12 @@ export default function Root() {
   }
 
   return (
-    <AppProvider>
+    <DevModeProvider>
       <AuthProvider>
+      <AppProvider>
         <Layout />
+        </AppProvider>
       </AuthProvider>
-    </AppProvider>
+    </DevModeProvider>
   );
 }
