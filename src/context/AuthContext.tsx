@@ -50,7 +50,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signOut = async () => {
     await endSession()
     setSession(null)
-    router.push('/sign_in')
+    router.push('/')
   }
 
   React.useEffect(() => {
