@@ -12,7 +12,7 @@ import { getPublicKey, signTransaction as signTX } from "@/src/utils/StellarAcco
 import { parseXDR } from "@/src/services/parseXDR";
 import { router } from 'expo-router'
 import { Header, colors, texts, Button } from 'nobak-native-design-system'
-
+import { useDevMode } from '@/src/context/DevModeContext'
 
 type WalletProviderProps = {
     children: ReactElement;
@@ -46,6 +46,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
     const [requestSession, setRequestSession] = React.useState<any>(null);
     const [requestEventData, setRequestEventData] = React.useState<any>(null);
     const [successfulSession, setSuccessfulSession] = React.useState(false);
+    const { isDevMode } = useDevMode()
 
     React.useEffect(() => {
         (async () => {
@@ -204,6 +205,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
             }}
         >
             <Header action={() => router.push('/(app)/scanner')} />
+            { isDevMode && <View><Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>DEVELOPMENT</Text></View> }
             {children}
             <Modal
                 animationType="slide"

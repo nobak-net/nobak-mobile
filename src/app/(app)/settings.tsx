@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { useAuth } from '@/src/context/AuthContext';
 import { Layout, colors, texts, Button } from 'nobak-native-design-system'
-import { useLocalization } from '@/src/context';
+import { useLocalization, useDevMode } from '@/src/context';
 import { router } from 'expo-router';
-
+import { WipeData } from '@/src/utils/WipeData';
+import { useActionPrompt } from '@/src/hooks/useActionPrompt';
 
 
 function signUp() {
@@ -15,15 +16,27 @@ function signIn() {
     router.push('/sign_in')
 }
 
-function nonCustodial() {
-    router.push('/(app)')
+function devMode() {
+    router.push('/sign_in')
 }
+
 
 const Settings = () => {
     const { t } = useLocalization();
+    const { toggleDevMode } = useDevMode()
+    const { actionPrompt } = useActionPrompt({ title: "Are you sure?", description: "This action can't be undone", onOK: () => destroy() })
 
     const { signOut, session } = useAuth();
     
+    const devMode = () => {
+        toggleDevMode()
+        router.push('/(app)')
+    }
+
+    const destroy = async () => {
+        await WipeData()
+        router.push('/')
+    }
     return (
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
             <View>
@@ -52,7 +65,8 @@ const Settings = () => {
                     </View>
                 }
                 <View style={{ gap: 12, marginTop: 24 }}>
-                    <Button type="caption" text={"Developer Mode"} description={"Switch to the testnet"} icon="Clockwork" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={signIn} />
+                    <Button type="caption" text={"Developer Mode"} description={"Switch to the testnet"} icon="Clockwork" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={devMode} />
+                    <Button type="caption" text={"Destroy Everything"} description={"Start from scratch"} icon="Cross" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={actionPrompt} />
                 </View>
             </View>
         </Layout>

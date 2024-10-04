@@ -5,4 +5,5 @@
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/nobak-net/nobak-mobile)
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/nobak-net/nobak-mobile/main)
 
-## NOBAK is a Custodial Wallet for the Stellar Network
+## NOBAK is a Non-custodial Wallet Signer for the Stellar Network
+
