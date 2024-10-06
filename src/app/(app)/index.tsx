@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import * as React from 'react';
 import { useAuth } from '@/src/context/AuthContext';
-import { Layout, colors, texts, Button, AccountCard, Symbol, InfoCard } from 'nobak-native-design-system';
+import { Layout, colors, texts, Button, AccountCard, Symbol, InfoCard, DigitalDisplay } from 'nobak-native-design-system';
 import { StellarAccount } from '@/src/utils/StellarAccount';
 import { StellarAccountManager } from '@/src/utils/StellarAccountManager';
 import navigation from "@/src/utils/Navigation";
@@ -59,10 +59,15 @@ export default function Index() {
 
         <Layout style={{ backgroundColor: colors.primary[2400], gap: 12 }}>
             <ScrollView style={{ height: '100%' }}>
-                <View style={{ marginBottom: 20}}>
-                    <Text style={{ ...texts.H4Bold, color: colors.primary[800] }}>{balance && "Balance"}</Text>
-                    <Text style={{ ...texts.H2Bold, color: colors.primary[400] }}>{balance && balance}</Text>
-                </View>
+                {balance &&
+                    <View style={{ marginBottom: 20 }}>
+                        <Text style={{ ...texts.H4Bold, color: colors.primary[800] }}>Total Balance</Text>
+                        <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', padding: 8, borderWidth: 1, borderColor: colors.primary[800], borderRadius: 8, backgroundColor: colors.primary[1800] }}>
+                            <DigitalDisplay value={`$${balance}`} secondaryColor={colors.primary[800]} color={colors.primary[100]} />
+                        </View>
+                    </View>
+                }
+
                 {/* <Text style={{ color: colors.primary[100], ...texts.CaptionBold }}>Browsing with:</Text>
                 {session && session.ledger_accounts && session.ledger_accounts.length > 0 && (
                     <Text selectable={true} style={{ color: colors.primary[100], ...texts.P1Light }}>

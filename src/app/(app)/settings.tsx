@@ -23,7 +23,7 @@ function devMode() {
 
 const Settings = () => {
     const { t } = useLocalization();
-    const { toggleDevMode } = useDevMode()
+    const { isDevMode, toggleDevMode } = useDevMode()
     const { actionPrompt } = useActionPrompt({ title: "Are you sure?", description: "This action can't be undone", onOK: () => destroy() })
 
     const { signOut, session } = useAuth();
@@ -56,7 +56,7 @@ const Settings = () => {
                         }} />
                     </View>
                     :
-                    <View>
+                    !isDevMode && <View>
                         <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Become a Member</Text>
                         <View style={{ gap: 12, marginTop: 24 }}>
                         <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={signIn} />
@@ -65,7 +65,7 @@ const Settings = () => {
                     </View>
                 }
                 <View style={{ gap: 12, marginTop: 24 }}>
-                    <Button type="caption" text={"Developer Mode"} description={"Switch to the testnet"} icon="Clockwork" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={devMode} />
+                    <Button type="caption" text={"Developer Mode"} description={"Switch to the testnet"} icon="Clockwork" buttonStyle={{ variant: !isDevMode ? 'primary' : 'secondary', full: true, size: 'medium' }} theme="dark" onPress={devMode} />
                     <Button type="caption" text={"Destroy Everything"} description={"Start from scratch"} icon="Cross" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={actionPrompt} />
                 </View>
             </View>

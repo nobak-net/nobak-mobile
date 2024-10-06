@@ -10,7 +10,6 @@ import * as Haptics from 'expo-haptics';
 
 export default function AppLayout() {
   const insets = useSafeAreaInsets();
-
   // This layout can be deferred because it's not the root layout.
   return <>
     <WalletProvider>
