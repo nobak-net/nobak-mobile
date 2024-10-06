@@ -4,7 +4,7 @@ import AppConfig from '@/src/utils/AppConfig';
 import Device from '@/src/utils/Device';
 import APIService from '@/src/utils/APIService';
 import * as Localization from 'expo-localization';
-
+import { Alert } from 'react-native'
 interface AppProviderProps extends React.PropsWithChildren<{}> {
 }
 
@@ -23,6 +23,7 @@ export function AppProvider({ children }: AppProviderProps) {
     React.useEffect(() => {
         (async () => {
             const settings = await AppConfig.initialize();
+            console.log(settings)
             const { data } = await APIService.health()
 
             if (data.status === 'ONLINE') {

@@ -204,8 +204,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
                 successfulSession
             }}
         >
-            <Header action={() => router.push('/(app)/scanner')} />
-            { isDevMode && <View><Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>DEVELOPMENT</Text></View> }
+            <Header isDev={isDevMode} action={() => router.push('/(app)/scanner')} />
             {children}
             <Modal
                 animationType="slide"
