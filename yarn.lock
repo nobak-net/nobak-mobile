@@ -7719,10 +7719,10 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
-nobak-native-design-system@^0.0.1-0426c4588557:
-  version "0.0.1-0426c4588557"
-  resolved "http://localhost:4873/nobak-native-design-system/-/nobak-native-design-system-0.0.1-0426c4588557.tgz#3d1669b269168592c776ae925952d27bdc5c640e"
-  integrity sha512-cfC3RB9oF1ktVdZinGIKEUjOWA6UKpnxLcSDbGtc67qJ8kCI856y3cBXGZwgLzWf0iOF76O/+yvVkI5h9hnUOw==
+nobak-native-design-system@^0.0.1-5d82e75878a2:
+  version "0.0.1-5d82e75878a2"
+  resolved "http://localhost:4873/nobak-native-design-system/-/nobak-native-design-system-0.0.1-5d82e75878a2.tgz#1eec57734673799a026de8f5ed39c9bde97244fc"
+  integrity sha512-cA8x8PxwsqBXNtu6AYZ6HgDNYpErXX7JTmKrvIj7StxNYJXk1pB3zl9srBY8++Uk692kiim9R2rWS49HkO355Q==
   dependencies:
     "@react-native-picker/picker" "^2.6.1"
     react-native-linear-gradient "^2.8.3"

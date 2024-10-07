@@ -20,8 +20,6 @@ export default function AccountDetailsScreen() {
   // State to hold the profile object
   const [profile, setProfile] = useState<Profile | null>(null);
   const [accountData, setAccountData] = useState<any | null>(null);
-  console.log("signers", accountData?.signers)
-  console.log("thresholds", accountData?.thresholds)
   useFocusEffect(
     useCallback(() => {
       setProfile(null); // Reset the profile when the screen gains focus
@@ -50,7 +48,6 @@ export default function AccountDetailsScreen() {
       const signedXDR = stellarAccount.signTransaction(transactionXDR, password);
       return signedXDR;
     } catch (error: any) {
-      console.error('Error signing transaction:', error);
       Alert.alert('Error', error.message);
       throw error;
     }
@@ -68,7 +65,6 @@ export default function AccountDetailsScreen() {
       const signedXDR = stellarAccount.signAndSubmitTransaction(transactionXDR, password);
       return signedXDR;
     } catch (error: any) {
-      console.error('Error signing transaction:', error);
       Alert.alert('Error', error.message);
       throw error;
     }
@@ -88,7 +84,6 @@ export default function AccountDetailsScreen() {
       setProfile(fetchedProfile);
       // navigate.go(Routes.RecoveryProfile, { profile: fetchedProfile })
     } catch (error: any) {
-      console.error(error);
       Alert.alert('Error', error.message);
     }
   };
@@ -114,13 +109,11 @@ export default function AccountDetailsScreen() {
 
   // Function to handle adding methods
   const handleAddMethod = (type: Method['type']) => {
-    console.log('type', type)
     navigation.go(Routes.AccountRecoveryChallenge, { methodType: type })
     // Implement your logic to add the method (stellar_address, phone_number, email)
   };
 
   const handleCompleteMethod = (value: string, type: Method['type']) => {
-    console.log('type', type)
     navigation.go(Routes.AccountRecoveryChallenge, { methodType: type })
     // Implement your logic to add the method (stellar_address, phone_number, email)
   };
@@ -131,7 +124,6 @@ export default function AccountDetailsScreen() {
       await Clipboard.setStringAsync(publicKey);
       Alert.alert('Copied', 'Public key copied to clipboard.');
     } catch (error) {
-      console.error('Error copying public key:', error);
       Alert.alert('Error', 'Failed to copy public key.');
     }
   };
