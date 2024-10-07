@@ -6,6 +6,7 @@ import { StellarAccount } from '@/src/utils/StellarAccount';
 import { StellarAccountManager } from '@/src/utils/StellarAccountManager';
 import navigation from "@/src/utils/Navigation";
 import { Routes } from "@/src/utils/Routes";
+import { useDevMode } from "@/src/context";
 
 interface AccountWithBalance {
     publicKey: string;
@@ -16,24 +17,23 @@ export default function Index() {
     const { session } = useAuth();
     const [accounts, setAccounts] = React.useState<StellarAccount[]>([]);
     const [balance, setBalance] = React.useState<string>('');
+    const { isDevMode } = useDevMode();
 
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
         const fetchAccounts = async () => {
             try {
-                if (session) {
-                    const accountManager = StellarAccountManager.createInstance(session);
-                    const accountsWithBalances = await accountManager.getAllAccountsWithBalance();
+                const accountManager = StellarAccountManager.createInstance(session, isDevMode);
+                const accountsWithBalances = await accountManager.getAllAccountsWithBalance();
 
-                    // Check if accountsWithBalances.accounts is an array
-                    if (Array.isArray(accountsWithBalances.accounts)) {
-                        // console.log("accountsWithBalances.accounts", accountsWithBalances.accounts)
-                        setAccounts(accountsWithBalances.accounts);
-                        setBalance(accountsWithBalances.totalBalance)
-                    } else {
-                        console.error('Fetched accounts data is not an array:', accountsWithBalances.accounts);
-                    }
+                // Check if accountsWithBalances.accounts is an array
+                if (Array.isArray(accountsWithBalances.accounts)) {
+                    // console.log("accountsWithBalances.accounts", accountsWithBalances.accounts)
+                    setAccounts(accountsWithBalances.accounts);
+                    setBalance(accountsWithBalances.totalBalance)
+                } else {
+                    console.error('Fetched accounts data is not an array:', accountsWithBalances.accounts);
                 }
             } catch (error) {
                 console.error('Error fetching accounts:', error);
@@ -43,11 +43,11 @@ export default function Index() {
         };
 
         fetchAccounts();
-    }, [session]);
+    }, [session, isDevMode]);
 
     const handleCreateAccount = async () => {
         if (session) {
-            const accountManager = StellarAccountManager.createInstance(session);
+            const accountManager = StellarAccountManager.createInstance(session, isDevMode);
             await accountManager.createAccount('your_password_here', "Account #1");
             const mergedAccounts = await accountManager.getAllAccounts();
             setAccounts(mergedAccounts);

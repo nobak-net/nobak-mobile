@@ -1,83 +1,77 @@
+
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import * as React from 'react';
 import SDK from '@/src/utils/SDK';
 import { loadSession, endSession } from '@/src/utils';
 
-interface AuthProviderProps extends React.PropsWithChildren<{}> {
-}
-// This hook can be used to access the user info.
-const AuthContext = React.createContext<{
+interface AuthProviderProps extends React.PropsWithChildren<{}> {}
+
+interface AuthContextType {
   setEmail: (email: string) => void;
   signIn: (code: string) => void;
   signOut: () => void;
   email: string;
-  session: any;
-} | null>(null);
+  session: any | null;
+}
 
-// This hook can be used to access the user info.
+const AuthContext = React.createContext<AuthContextType | null>(null);
+
 export function useAuth() {
   const { APP_ENV } = Constants.expoConfig?.extra || {};
-
   const value = React.useContext(AuthContext);
 
-  // Check if value is null and throw an error if in non-production environment
   if (!value && APP_ENV !== 'PRODUCTION') {
     throw new Error('useAuth must be wrapped in a <AuthProvider />');
   }
 
-  // Return the value or provide a fallback to prevent accessing properties on null
-  return value ?? {
-    setEmail: () => {},
-    signIn: () => {},
-    signOut: () => {},
-    email: '',
-    session: null
-  };
+  return (
+    value ?? {
+      setEmail: () => {},
+      signIn: () => {},
+      signOut: () => {},
+      email: '',
+      session: null, // Ensure session defaults to null
+    }
+  );
 }
+
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [email, setEmail] = React.useState('')
-  const [session, setSession] = React.useState<any | null>(null)
+  const [email, setEmail] = React.useState('');
+  const [session, setSession] = React.useState<any | null>(null);
 
   const signIn = async (code: string) => {
     const response = await SDK.signIn(code, email);
     if (response.status === 200) {
-      setSession(await loadSession())
-      router.push('/(app)')
+      setSession(await loadSession());
+      router.push('/(app)');
     }
-  }
+  };
 
   const signOut = async () => {
-    await endSession()
-    setSession(null)
-    router.push('/')
-  }
+    await endSession();
+    setSession(null);
+    router.push('/');
+  };
 
+  // Automatically handle session-based navigation
   React.useEffect(() => {
-    (async () => {
-      if (session) {
-        router.push('/(app)')
-      }
-    })();
+    if (session) {
+      router.push('/(app)');
+    }
   }, [session]);
 
+  // Load session on app start
   React.useEffect(() => {
     (async () => {
-      setSession(await loadSession())
+      const loadedSession = await loadSession();
+      setSession(loadedSession || null); // Handle undefined sessions
     })();
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        signIn,
-        signOut,
-        session,
-        setEmail,
-        email
-      }}>
+    <AuthContext.Provider value={{ signIn, signOut, session, setEmail, email }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
