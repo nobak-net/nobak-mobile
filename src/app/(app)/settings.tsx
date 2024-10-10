@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Alert } from 'react-native';
 import { useAuth } from '@/src/context/AuthContext';
-import { Layout, colors, texts, Button } from 'nobak-native-design-system'
+import { Layout, colors, texts, Button, PromoCard } from 'nobak-native-design-system'
 import { useLocalization, useDevMode } from '@/src/context';
 import { router } from 'expo-router';
 import { WipeData } from '@/src/utils/WipeData';
@@ -58,13 +58,16 @@ const Settings = () => {
                     :
                     !isDevMode && <View>
                         <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Become a Member</Text>
+                        <PromoCard title="Sign Up" description="Enjoy account recovery"/>
                         <View style={{ gap: 12, marginTop: 24 }}>
                         <Button type="caption" text={t.index.sign_in.text} description={t.index.sign_in.description} icon="Explore" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={signIn} />
-                        <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={signUp} />
+                        {/* <Button type="caption" text={t.index.sign_up.text} description={t.index.sign_up.description} icon="World" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={signUp} /> */}
                         </View>
                     </View>
                 }
                 <View style={{ gap: 12, marginTop: 24 }}>
+                    <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>Advanced</Text>
+                    {/* <Button type="captio" text={"Theme"} description={"Change theme"} icon="Extension" buttonStyle={{ variant: !isDevMode ? 'primary' : 'secondary', full: true, size: 'medium' }} theme="dark" onPress={devMode} /> */}
                     <Button type="caption" text={"Developer Mode"} description={"Switch to the testnet"} icon="Clockwork" buttonStyle={{ variant: !isDevMode ? 'primary' : 'secondary', full: true, size: 'medium' }} theme="dark" onPress={devMode} />
                     <Button type="caption" text={"Destroy Everything"} description={"Start from scratch"} icon="Cross" buttonStyle={{ variant: 'primary', full: true, size: 'medium' }} theme="dark" onPress={actionPrompt} />
                 </View>

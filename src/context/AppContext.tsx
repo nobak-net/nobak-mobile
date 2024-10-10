@@ -23,7 +23,7 @@ export function AppProvider({ children }: AppProviderProps) {
     React.useEffect(() => {
         (async () => {
             const settings = await AppConfig.initialize();
-            console.log(settings)
+            // console.log(settings)
             const { data } = await APIService.health()
 
             if (data.status === 'ONLINE') {

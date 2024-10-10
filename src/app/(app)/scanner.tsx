@@ -9,7 +9,6 @@ function Apps() {
   // const navigation = useNavigation();
   const [scanned, setScanned] = useState(false);
   const { updateUri, appMetadata, successfulSession, disconnect } = useWallet()
-
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
@@ -27,7 +26,7 @@ function Apps() {
       </View>
     );
   }
-  
+
   const handleBarCodeScanned = ({ type, data }: any) => {
     setScanned(true);
     updateUri(data);
@@ -53,15 +52,15 @@ function Apps() {
           <View style={styles.layerBottom} />
         </CameraView>
       }
-      {scanned && appMetadata && successfulSession && <Layout>
-        <Text style={{ color: colors.primary[2000], ...texts.CaptionBold }}>Connected to:</Text>
-        <Text style={{ color: colors.primary[2400], ...texts.P1Medium }}>{appMetadata.name}</Text>
-        <Text style={{ color: colors.primary[1700], ...texts.P3Light }}>{appMetadata.description}</Text>
+      {scanned && appMetadata && successfulSession && <Layout style={{ backgroundColor: colors.primary[2000] }}>
+        <Text style={{ color: colors.primary[400], ...texts.CaptionBold }}>Connected to:</Text>
+        <Text style={{ color: colors.primary[100], ...texts.P1Medium }}>{appMetadata.name}</Text>
+        <Text style={{ color: colors.primary[300], ...texts.P3Light }}>{appMetadata.description}</Text>
         <View>
-          <Button text="Disconnect" onPress={() => handleDisconnect()}/>
+          <Button text="Disconnect" onPress={() => handleDisconnect()} />
         </View>
       </Layout>}
-      {/* {scanned && <Button text={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
+      {scanned && <Button text={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
     </View>
   );
 }
