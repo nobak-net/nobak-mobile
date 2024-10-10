@@ -24,9 +24,13 @@ const NewAccount: React.FC = () => {
       const password = await promptPassword();
 
       // Create an instance of StellarAccountManager
-      const accountManager = StellarAccountManager.createInstance(session, isDevMode);
-
+      const accountManager = StellarAccountManager.createInstance({ session, network: isDevMode ? 'testnet' : 'mainnet' });
+      console.log('accountManager', accountManager)
+      await accountManager.getAllAccounts()
       const number = accountManager.getAccountCount()
+
+      console.log('number', number)
+      
       // If creating the account, allow for non-custodial cases where session may be null
       const accountName = `Account #${number + 1}`; // You can replace this with user input
 

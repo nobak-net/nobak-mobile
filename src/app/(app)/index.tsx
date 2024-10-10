@@ -24,9 +24,10 @@ export default function Index() {
     React.useEffect(() => {
         const fetchAccounts = async () => {
             try {
-                const accountManager = StellarAccountManager.createInstance(session, isDevMode);
+                // console.log('network', isDevMode ? 'testnet' : 'mainnet')
+                const accountManager = StellarAccountManager.createInstance({ session, network: isDevMode ? 'testnet' : 'mainnet' });
                 const accountsWithBalances = await accountManager.getAllAccountsWithBalance();
-
+                // console.log('accountsWithBalances', accountsWithBalances)
                 // Check if accountsWithBalances.accounts is an array
                 if (Array.isArray(accountsWithBalances.accounts)) {
                     // console.log("accountsWithBalances.accounts", accountsWithBalances.accounts)
@@ -47,7 +48,7 @@ export default function Index() {
 
     const handleCreateAccount = async () => {
         if (session) {
-            const accountManager = StellarAccountManager.createInstance(session, isDevMode);
+            const accountManager = StellarAccountManager.createInstance({ session, network: isDevMode ? 'testnet' : 'mainnet' });
             await accountManager.createAccount('your_password_here', "Account #1");
             const mergedAccounts = await accountManager.getAllAccounts();
             setAccounts(mergedAccounts);
@@ -77,6 +78,8 @@ export default function Index() {
                 <View style={{ display: 'flex', flexDirection: 'row', gap: 8, alignSelf: 'flex-start' }}>
                     <Button text="Add Account" theme="dark" icon="Collections" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} />
                     <Button text="Send" theme="dark" icon="Send" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} />
+                    {/* <Button text="Merge" theme="dark" icon="Bars" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} /> */}
+                    {/* <Button text="Transfer" theme="dark" icon="Trade" type="iconText" buttonStyle={{ variant: 'primary', size: 'small' }} onPress={() => navigation.go(Routes.AddAccount)} /> */}
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', gap: 4, alignItems: 'center', marginTop: 24 }}>
                     <Symbol type="Star" color={colors.primary[100]} />
@@ -86,17 +89,19 @@ export default function Index() {
                     {loading ? (
                         <Text style={{ color: colors.primary[100], ...texts.P1Light }}>Loading...</Text>
                     ) : (
-                        accounts.length !== 0 ? accounts.map((account, index) => (
+                        accounts.length !== 0 ? accounts.map((account, index) => {
+                            // console.log('account', account)
+                            return(
                             <AccountCard
                                 key={index}
                                 name={account.name}
                                 publicKey={account.publicKey}
                                 balance={""}
                                 canSign={account.canSign}
-                                isBackedUp={account.isBackedUp}
+                                // isBackedUp={account.isBackedUp}
                                 viewAccount={() => navigation.go(Routes.AccountDetails, { publicKey: account.publicKey })} // Pass the publicKey for navigation
                             />
-                        )) :
+                        )}) :
                             <InfoCard symbol="" title="Empty" description="You have no accounts set yet" />
                     )}
                 </View>
