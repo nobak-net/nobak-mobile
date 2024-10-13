@@ -19,7 +19,7 @@ type WalletProviderProps = {
 
 type WalletContextType = {
   url: string | null;
-  signTransaction: () => void;
+  signAndSubmitTransaction: () => void;
   updateUri: (wcuri: string) => void;
   getUri: () => string;
   pair: () => void;
@@ -168,6 +168,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
   const onSessionRequest = React.useCallback(
     async (requestEvent: SignClientTypes.EventArguments["session_request"]) => {
       const { topic } = requestEvent;
+      console.log('onSessionRequest')
       const requestSessionData = web3wallet.engine.signClient.session.get(topic);
       setRequestSession(requestSessionData);
       setRequestEventData(requestEvent);
@@ -179,7 +180,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
   const url = '';
 
   // Updated signTransaction function
-  const signTransaction = async () => {
+  const signAndSubmitTransaction = async () => {
     if (requestEventData !== null && selectedAccount) {
       const { topic, params, id } = requestEventData;
       const { request } = params;
@@ -192,18 +193,19 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
         // Sign the transaction using StellarAccount instance
         console.log('request', request)
         console.log('request?.params?.xdr', request?.params?.xdr)
-        const signedXDR = await stellarAccount.signAndSubmitTransaction(request?.params?.xdr, password);
-        console.log('signedXDR', signedXDR)
-        setRequestEventData(null);
+        const response = await stellarAccount.signAndSubmitTransaction(request?.params?.xdr, password);
+        console.log('response', response)
 
-        // await web3wallet.respondSessionRequest({
-        //   topic,
-        //   response: {
-        //     id: id,
-        //     result: { },
-        //     jsonrpc: '2.0',
-        //   },
-        // });
+        await web3wallet.respondSessionRequest({
+          topic,
+          response: {
+            id: id,
+            result: { successful: response.successful },
+            jsonrpc: '2.0',
+          },
+        });
+
+        setRequestEventData(null);
         setModalVisible(false);
       } catch (error) {
         console.error('Error signing transaction:', error);
@@ -231,7 +233,7 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
     <WalletContext.Provider
       value={{
         url,
-        signTransaction,
+        signAndSubmitTransaction,
         updateUri,
         getUri,
         pair,
@@ -309,13 +311,13 @@ export const WalletProvider: FunctionComponent<WalletProviderProps> = ({
                 <Text style={{ color: colors.primary[2400], ...texts.H4Bold }}>
                   Sign Transaction
                 </Text>
-                <Text style={{ color: colors.primary[1700], ...texts.P3Medium }}>
+                {/* <Text style={{ color: colors.primary[1700], ...texts.P3Medium }}>
                   {requestEventData.params.request.params.xdr}
-                </Text>
+                </Text> */}
                 <View style={{ marginTop: 24, gap: 8 }}>
                   <Button
                     text="Sign"
-                    onPress={() => signTransaction()}
+                    onPress={() => signAndSubmitTransaction()}
                     buttonStyle={{ full: true, variant: 'primary', size: 'small' }}
                   />
                   <Button
