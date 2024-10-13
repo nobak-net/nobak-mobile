@@ -51,16 +51,34 @@ function Apps() {
           <View style={styles.focused} />
           <View style={styles.layerBottom} />
         </CameraView>
+        // :
+        // (scanned || !successfulSession) && <View style={{ backgroundColor: colors.primary[2000], height: '100%', width: '100%' }}>
+
+        //   <View style={{ height: '100%', display: 'flex', alignSelf: 'center', justifyContent: 'center' }}>
+        //     <Button text={'Tap to Scan Again'} onPress={() => setScanned(false)} />
+        //   </View>
+        // </View>
       }
-      {scanned && appMetadata && successfulSession && <Layout style={{ backgroundColor: colors.primary[2000] }}>
-        <Text style={{ color: colors.primary[400], ...texts.CaptionBold }}>Connected to:</Text>
-        <Text style={{ color: colors.primary[100], ...texts.P1Medium }}>{appMetadata.name}</Text>
-        <Text style={{ color: colors.primary[300], ...texts.P3Light }}>{appMetadata.description}</Text>
-        <View>
-          <Button text="Disconnect" onPress={() => handleDisconnect()} />
+      {/* {(scanned || !successfulSession) && <View style={{ backgroundColor: colors.primary[2000], height: '100%', width: '100%' }}>
+
+        <View style={{ height: '100%', display: 'flex', alignSelf: 'center', justifyContent: 'center' }}>
+          <Button text={'Tap to Scan Again'} onPress={() => setScanned(false)} />
         </View>
-      </Layout>}
-      {scanned && <Button text={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      </View>
+      } */}
+      {(scanned && appMetadata && successfulSession) && <Layout style={{ backgroundColor: colors.primary[2000] }}>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: 24, backgroundColor: colors.primary[1800], padding: 24, borderRadius: 12 }}>
+          <View>
+            <Text style={{ color: colors.primary[400], ...texts.CaptionBold }}>Connected to:</Text>
+            <Text style={{ color: colors.primary[100], ...texts.H3Bold }}>{appMetadata.name}</Text>
+            <Text style={{ color: colors.primary[300], ...texts.P1Medium }}>{appMetadata.description}</Text>
+          </View>
+          <View>
+            <Button text="Disconnect" buttonStyle={{ size: 'small', variant: 'secondary' }} onPress={() => handleDisconnect()} />
+          </View>
+        </View>
+      </Layout>
+      }
     </View>
   );
 }
